@@ -24,10 +24,6 @@ export const menuLinks = [
 		path: '/studio',
 	},
 	{
-		title: 'Research',
-		path: '/research',
-	},
-	{
 		title: 'About',
 		path: '/about',
 	},

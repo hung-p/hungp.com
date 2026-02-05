@@ -1,0 +1,15 @@
+# robots.txt for hungp.com
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://hungp.com/sitemap-index.xml
+
+# Disallow admin or private paths (if any)
+Disallow: /api/
+Disallow: /_astro/
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

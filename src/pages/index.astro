@@ -2,17 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Dock } from "../components/Dock";
 import EngineCard from "../components/EngineCard.astro";
-import InsightCard from "../components/InsightCard.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import { tier1Projects } from "../data/projects";
-import { getCollection } from "astro:content";
 import { siteConfig } from "../site.config";
 import { ArrowRight, Sparkles, MapPin, Zap } from "lucide-react";
-
-// Get latest 3 blog posts
-const posts = (await getCollection("blog"))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
 ---
 
 <BaseLayout>
@@ -108,36 +101,6 @@ const posts = (await getCollection("blog"))
 					class="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
 				>
 					View all projects in the Studio
-					<ArrowRight className="w-4 h-4" />
-				</a>
-			</div>
-		</section>
-
-		<!-- Recent Insights Section -->
-		<section>
-			<SectionHeader
-				title="Recent Insights"
-				subtitle="Technical deep-dives, entrepreneurial reflections, and thoughts on building at the frontier."
-			/>
-
-			<div class="grid md:grid-cols-3 gap-4">
-				{posts.map((post) => <InsightCard post={post} />)}
-			</div>
-
-			{
-				posts.length === 0 && (
-					<div class="text-center py-12 text-muted-foreground">
-						<p>Research insights coming soon...</p>
-					</div>
-				)
-			}
-
-			<div class="mt-8 text-center">
-				<a
-					href="/research"
-					class="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-				>
-					Explore all research & thoughts
 					<ArrowRight className="w-4 h-4" />
 				</a>
 			</div>
