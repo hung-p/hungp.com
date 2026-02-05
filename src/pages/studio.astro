@@ -1,0 +1,136 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Dock } from "../components/Dock";
+import EngineCard from "../components/EngineCard.astro";
+import TierCard from "../components/TierCard.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import {
+	tier1Projects,
+	tier2Projects,
+	tier3Projects,
+} from "../data/projects";
+import { Rocket, Palette, Beaker } from "lucide-react";
+---
+
+<BaseLayout
+	title="Studio | Hung Pham"
+	description="The venture studio: Active revenue engines, creative IP, and experimental projects."
+>
+	<div class="space-y-20 md:space-y-28 pb-32">
+		<!-- Page Header -->
+		<section class="pt-8 md:pt-16">
+			<div class="max-w-3xl">
+				<h1
+					class="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
+				>
+					The Studio
+				</h1>
+				<p class="text-lg md:text-xl text-muted-foreground leading-relaxed">
+					A structured venture studio building at the intersection of
+					AI, content, and culture. From revenue-generating products
+					to creative experiments.
+				</p>
+			</div>
+		</section>
+
+		<!-- Tier 1: Active Engines -->
+		<section>
+			<div class="flex items-center gap-3 mb-8">
+				<div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-500">
+					<Rocket className="w-5 h-5" />
+				</div>
+				<div>
+					<h2 class="text-2xl md:text-3xl font-bold">Active Engines</h2>
+					<p class="text-muted-foreground text-sm">
+						Revenue-generating products in active development
+					</p>
+				</div>
+			</div>
+
+			<div class="grid gap-6">
+				{tier1Projects.map((project) => <EngineCard project={project} />)}
+			</div>
+		</section>
+
+		<!-- Tier 2: Content & IP -->
+		<section>
+			<div class="flex items-center gap-3 mb-8">
+				<div class="p-2 rounded-lg bg-purple-500/10 text-purple-500">
+					<Palette className="w-5 h-5" />
+				</div>
+				<div>
+					<h2 class="text-2xl md:text-3xl font-bold">Content & IP</h2>
+					<p class="text-muted-foreground text-sm">
+						Cultural projects and intellectual property
+					</p>
+				</div>
+			</div>
+
+			<div class="grid md:grid-cols-2 gap-4">
+				{tier2Projects.map((project) => <TierCard project={project} />)}
+			</div>
+		</section>
+
+		<!-- Tier 3: Labs & Experiments -->
+		<section>
+			<div class="flex items-center gap-3 mb-8">
+				<div class="p-2 rounded-lg bg-blue-500/10 text-blue-500">
+					<Beaker className="w-5 h-5" />
+				</div>
+				<div>
+					<h2 class="text-2xl md:text-3xl font-bold">Labs & Experiments</h2>
+					<p class="text-muted-foreground text-sm">
+						Research tools and experimental projects
+					</p>
+				</div>
+			</div>
+
+			<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+				{
+					tier3Projects.map((project) => (
+						<TierCard project={project} size="compact" />
+					))
+				}
+			</div>
+		</section>
+
+		<!-- Studio Philosophy -->
+		<section
+			class="py-12 px-8 rounded-2xl border border-white/5 bg-gradient-to-br from-card/50 to-muted/10"
+		>
+			<h3 class="text-xl font-semibold mb-4">Studio Philosophy</h3>
+			<div class="grid md:grid-cols-3 gap-8 text-muted-foreground">
+				<div>
+					<h4 class="text-foreground font-medium mb-2">
+						Build in Public
+					</h4>
+					<p class="text-sm leading-relaxed">
+						Share the journey, not just the destination. Document
+						learnings, failures, and wins to help others on similar
+						paths.
+					</p>
+				</div>
+				<div>
+					<h4 class="text-foreground font-medium mb-2">
+						Compound Effects
+					</h4>
+					<p class="text-sm leading-relaxed">
+						Each project builds skills and assets that benefit the
+						others. The studio is greater than the sum of its parts.
+					</p>
+				</div>
+				<div>
+					<h4 class="text-foreground font-medium mb-2">
+						Technology + Culture
+					</h4>
+					<p class="text-sm leading-relaxed">
+						The best products sit at the intersection of technical
+						excellence and cultural resonance. Build both.
+					</p>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Dock client:load />
+</BaseLayout>

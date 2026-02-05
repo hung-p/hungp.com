@@ -1,0 +1,80 @@
+---
+import type { Project } from "../data/projects";
+import { ArrowUpRight, TrendingUp } from "lucide-react";
+
+interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<a
+	href={project.href}
+	target="_blank"
+	rel="noopener noreferrer"
+	class="group relative block overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-card to-muted/20 p-6 md:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1"
+>
+	<!-- Glow effect on hover -->
+	<div
+		class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+	>
+	</div>
+
+	<div class="relative z-10">
+		<!-- Header -->
+		<div class="flex items-start justify-between mb-4">
+			<div>
+				<div class="flex items-center gap-3 mb-2">
+					<h3
+						class="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-primary transition-colors"
+					>
+						{project.title}
+					</h3>
+					{
+						project.stats && (
+							<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-medium border border-emerald-500/20">
+								<TrendingUp className="w-3.5 h-3.5" />
+								{project.stats}
+							</span>
+						)
+					}
+				</div>
+			</div>
+			<div
+				class="p-2 rounded-full bg-white/5 group-hover:bg-primary/10 transition-colors"
+			>
+				<ArrowUpRight
+					className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors"
+				/>
+			</div>
+		</div>
+
+		<!-- Description -->
+		<p class="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
+			{project.description}
+		</p>
+
+		<!-- Tags -->
+		<div class="flex flex-wrap gap-2">
+			{
+				project.tags.map((tag) => (
+					<span class="px-3 py-1 rounded-full bg-secondary/50 text-secondary-foreground text-sm font-medium border border-white/5">
+						{tag}
+					</span>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- Active indicator -->
+	<div class="absolute top-4 right-4">
+		<span class="relative flex h-3 w-3">
+			<span
+				class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+			></span>
+			<span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"
+			></span>
+		</span>
+	</div>
+</a>

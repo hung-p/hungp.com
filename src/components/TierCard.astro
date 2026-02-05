@@ -1,0 +1,53 @@
+---
+import type { Project } from "../data/projects";
+import { ArrowUpRight } from "lucide-react";
+
+interface Props {
+	project: Project;
+	size?: "default" | "compact";
+}
+
+const { project, size = "default" } = Astro.props;
+const isCompact = size === "compact";
+---
+
+<a
+	href={project.href}
+	target="_blank"
+	rel="noopener noreferrer"
+	class:list={[
+		"group block rounded-xl border border-white/5 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/80",
+		isCompact ? "p-4" : "p-5",
+	]}
+>
+	<div class="flex items-start justify-between mb-2">
+		<h4
+			class:list={[
+				"font-semibold group-hover:text-primary transition-colors",
+				isCompact ? "text-base" : "text-lg",
+			]}
+		>
+			{project.title}
+		</h4>
+		<ArrowUpRight
+			className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all"
+		/>
+	</div>
+	<p
+		class:list={[
+			"text-muted-foreground mb-3 line-clamp-2",
+			isCompact ? "text-sm" : "text-sm",
+		]}
+	>
+		{project.description}
+	</p>
+	<div class="flex flex-wrap gap-1.5">
+		{
+			project.tags.slice(0, 3).map((tag) => (
+				<span class="px-2 py-0.5 rounded-md bg-secondary/30 text-muted-foreground text-xs">
+					{tag}
+				</span>
+			))
+		}
+	</div>
+</a>

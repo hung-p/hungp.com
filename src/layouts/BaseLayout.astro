@@ -1,0 +1,45 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import { siteConfig } from "../site.config";
+import "../styles/global.css";
+
+interface Props {
+    title?: string;
+    description?: string;
+    image?: string;
+}
+
+const {
+    title = siteConfig.title,
+    description = siteConfig.description,
+    image = "/blog-placeholder-1.jpg",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+    <head>
+        <BaseHead title={title} description={description} image={image} />
+    </head>
+    <body
+        class="bg-background text-foreground antialiased min-h-screen font-sans selection:bg-purple-500/30 selection:text-purple-200 overflow-x-hidden"
+    >
+        <!-- Background Gradients -->
+        <div
+            class="fixed inset-0 z-[-1] h-full w-full bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] opacity-20 pointer-events-none"
+        >
+        </div>
+        <div
+            class="fixed top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]"
+        >
+        </div>
+
+        <main class="relative flex min-h-screen flex-col">
+            <div
+                class="flex-1 w-full mx-auto max-w-screen-xl px-4 md:px-8 py-8 md:py-16"
+            >
+                <slot />
+            </div>
+        </main>
+    </body>
+</html>
