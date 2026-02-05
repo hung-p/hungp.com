@@ -1,5 +1,6 @@
 export interface SiteConfig {
     title: string;
+    tagline?: string;
     description: string;
     lang: string;
     author: string;
@@ -8,7 +9,7 @@ export interface SiteConfig {
     linkedin?: string;
     email?: string;
     location?: string;
-    tagline?: string;
+    university?: string;
 }
 
 export interface BlogCategory {

@@ -4,329 +4,302 @@ import { Dock } from "../components/Dock";
 import { siteConfig } from "../site.config";
 import { techStack } from "../data/projects";
 import {
-	MapPin,
-	Mail,
-	Github,
-	Linkedin,
-	Twitter,
-	ArrowRight,
-	Briefcase,
-	GraduationCap,
-	Code,
-	Sparkles,
+  MapPin,
+  Mail,
+  Github,
+  Linkedin,
+  Twitter,
+  ArrowRight,
+  Briefcase,
+  GraduationCap,
+  Code,
+  Sparkles,
 } from "lucide-react";
 ---
 
 <BaseLayout
-	title="About & Connect | Hung Pham"
-	description="AI Engineer from Vietnam, now building at the intersection of computer vision and entrepreneurship in Silicon Valley."
+  title="About & Connect | Hung Pham"
+  description="AI Engineer from Vietnam, now building at the intersection of computer vision and entrepreneurship in Silicon Valley."
 >
-	<div class="space-y-16 md:space-y-24 pb-32">
-		<!-- Page Header -->
-		<section class="pt-8 md:pt-16">
-			<div class="grid lg:grid-cols-3 gap-12">
-				<!-- Bio Section -->
-				<div class="lg:col-span-2 space-y-8">
-					<div>
-						<h1
-							class="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
-						>
-							About
-						</h1>
-						<p
-							class="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6"
-						>
-							AI Engineer, Venture Architect, & Computer Vision
-							Researcher. Building intelligent systems that create
-							real value.
-						</p>
-					</div>
+  <div class="space-y-16 md:space-y-24 pb-32">
+    <!-- Page Header -->
+    <section class="pt-8 md:pt-16">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <!-- Bio Section -->
+        <div class="lg:col-span-2 space-y-8">
+          <div>
+            <h1
+              class="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
+            >
+              About
+            </h1>
+            <p
+              class="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6"
+            >
+              AI Engineer & Venture Builder. Turning research into products that actually matter.
+            </p>
+          </div>
 
-					<!-- The Story -->
-					<div class="prose prose-invert max-w-none space-y-4">
-						<p class="text-muted-foreground leading-relaxed">
-							My journey began in <span class="text-foreground"
-								>Vietnam</span
-							>, where I first discovered the power of code to
-							transform ideas into reality. That curiosity led me
-							through years as a <span class="text-foreground"
-								>Kotlin Lead Developer</span
-							>, building mobile applications that reached
-							millions of users.
-						</p>
+          <!-- The Story -->
+          <div class="prose prose-invert max-w-none space-y-4">
+            <p class="text-muted-foreground leading-relaxed">
+              My journey began in <span class="text-foreground">Vietnam</span>,
+              where I first discovered the power of code to transform ideas into
+              reality. I graduated <span class="text-foreground">Summa Cum Laude in Computer Science</span>, then spent years as a <span
+                class="text-foreground">Mobile Lead at Kootoro Vietnam</span
+              >, building mobile applications that reached millions of users.
+            </p>
 
-						<p class="text-muted-foreground leading-relaxed">
-							Today, I'm pursuing my <span class="text-foreground"
-								>Master's in Computer Science at San Jose State
-								University</span
-							>, specializing in Computer Vision and AI. My
-							research focuses on generative models, ethical AI
-							implementation, and the practical application of
-							machine learning to real-world problems.
-						</p>
+            <p class="text-muted-foreground leading-relaxed">
+              Today, I'm pursuing my <span class="text-foreground"
+                >Master's in AI at San Jose State University</span
+              >. My research spans recommender systems, NLP, and reinforcement learning—always with an eye toward ethical implementation and solving real-world problems.
+            </p>
 
-						<p class="text-muted-foreground leading-relaxed">
-							Beyond academia, I run a <span class="text-foreground"
-								>venture studio</span
-							> that bridges technology and culture. From AIGallery
-							serving 60k+ monthly users to creative projects exploring
-							Vietnamese heritage, I believe the best technology serves
-							human creativity and connection.
-						</p>
+            <p class="text-muted-foreground leading-relaxed">
+              Beyond academia, I run a <span class="text-foreground"
+                >venture studio</span
+              > that bridges technology and culture. From AIGallery serving 60k+ monthly
+              users to creative projects exploring Vietnamese heritage, I believe
+              the best technology serves human creativity and connection.
+            </p>
 
-						<p class="text-muted-foreground leading-relaxed">
-							I'm particularly interested in the intersection of <span
-								class="text-foreground"
-								>AI and entrepreneurship</span
-							>—how emerging technologies can be shaped into
-							products that genuinely help people, rather than
-							just demonstrating technical capability.
-						</p>
-					</div>
-				</div>
+            <p class="text-muted-foreground leading-relaxed">
+              I'm particularly interested in the intersection of <span
+                class="text-foreground">AI and entrepreneurship</span
+              >—how emerging technologies can be shaped into products that
+              genuinely help people, rather than just demonstrating technical
+              capability.
+            </p>
+          </div>
+        </div>
 
-				<!-- Quick Info Card -->
-				<div class="space-y-6">
-					<div
-						class="p-6 rounded-2xl border border-white/5 bg-card/30 backdrop-blur-sm"
-					>
-						<h3 class="font-semibold mb-4 text-lg">Quick Info</h3>
-						<div class="space-y-4">
-							<div class="flex items-center gap-3">
-								<MapPin
-									className="w-4 h-4 text-muted-foreground"
-								/>
-								<span class="text-muted-foreground"
-									>{siteConfig.location}</span
-								>
-							</div>
-							<div class="flex items-center gap-3">
-								<GraduationCap
-									className="w-4 h-4 text-muted-foreground"
-								/>
-								<span class="text-muted-foreground"
-									>MS CS @ San Jose State</span
-								>
-							</div>
-							<div class="flex items-center gap-3">
-								<Briefcase
-									className="w-4 h-4 text-muted-foreground"
-								/>
-								<span class="text-muted-foreground"
-									>Venture Studio Founder</span
-								>
-							</div>
-							<div class="flex items-center gap-3">
-								<Code
-									className="w-4 h-4 text-muted-foreground"
-								/>
-								<span class="text-muted-foreground"
-									>Ex-Kotlin Lead</span
-								>
-							</div>
-						</div>
-					</div>
+        <!-- Quick Info Card -->
+        <div class="space-y-6">
+          <div
+            class="p-6 rounded-2xl border border-white/5 bg-card/30 backdrop-blur-sm"
+          >
+            <h3 class="font-semibold mb-4 text-lg">Quick Info</h3>
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <MapPin className="w-4 h-4 text-muted-foreground" />
+                <span class="text-muted-foreground">{siteConfig.location}</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <GraduationCap className="w-4 h-4 text-muted-foreground" />
+                <span class="text-muted-foreground">MS AI @ San Jose State</span
+                >
+              </div>
+              <div class="flex items-center gap-3">
+                <Briefcase className="w-4 h-4 text-muted-foreground" />
+                <span class="text-muted-foreground">Venture Studio Founder</span
+                >
+              </div>
+              <div class="flex items-center gap-3">
+                <Code className="w-4 h-4 text-muted-foreground" />
+                <span class="text-muted-foreground"
+                  >Ex-Mobile Lead @ Kootoro</span
+                >
+              </div>
+            </div>
+          </div>
 
-					<!-- Social Links -->
-					<div
-						class="p-6 rounded-2xl border border-white/5 bg-card/30 backdrop-blur-sm"
-					>
-						<h3 class="font-semibold mb-4 text-lg">Connect</h3>
-						<div class="space-y-3">
-							<a
-								href={siteConfig.github}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-							>
-								<Github className="w-4 h-4" />
-								<span>GitHub</span>
-							</a>
-							<a
-								href={siteConfig.linkedin}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-							>
-								<Linkedin className="w-4 h-4" />
-								<span>LinkedIn</span>
-							</a>
-							<a
-								href={siteConfig.twitter}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-							>
-								<Twitter className="w-4 h-4" />
-								<span>Twitter</span>
-							</a>
-							<a
-								href={`mailto:${siteConfig.email}`}
-								class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-							>
-								<Mail className="w-4 h-4" />
-								<span>{siteConfig.email}</span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+          <!-- Social Links -->
+          <div
+            class="p-6 rounded-2xl border border-white/5 bg-card/30 backdrop-blur-sm"
+          >
+            <h3 class="font-semibold mb-4 text-lg">Connect</h3>
+            <div class="space-y-3">
+              <a
+                href={siteConfig.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Github className="w-4 h-4" />
+                <span>GitHub</span>
+              </a>
+              <a
+                href={siteConfig.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Linkedin className="w-4 h-4" />
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href={siteConfig.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Twitter className="w-4 h-4" />
+                <span>Twitter</span>
+              </a>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                <span>{siteConfig.email}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<!-- Tech Stack Section -->
-		<section>
-			<h2 class="text-2xl md:text-3xl font-bold mb-8">
-				Skills & Stack
-			</h2>
+    <!-- Tech Stack Section -->
+    <section>
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Skills & Stack</h2>
 
-			<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-				<!-- Frontend -->
-				<div
-					class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-				>
-					<h3
-						class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-					>
-						Frontend
-					</h3>
-					<div class="space-y-2">
-						{
-							techStack.frontend.map((tech) => (
-								<div class="flex items-center gap-2">
-									<div class="w-1.5 h-1.5 rounded-full bg-blue-500" />
-									<span class="text-sm">{tech}</span>
-								</div>
-							))
-						}
-					</div>
-				</div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Frontend -->
+        <div
+          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
+        >
+          <h3
+            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
+          >
+            Frontend
+          </h3>
+          <div class="space-y-2">
+            {
+              techStack.frontend.map((tech) => (
+                <div class="flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                  <span class="text-sm">{tech}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
 
-				<!-- Backend -->
-				<div
-					class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-				>
-					<h3
-						class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-					>
-						Backend
-					</h3>
-					<div class="space-y-2">
-						{
-							techStack.backend.map((tech) => (
-								<div class="flex items-center gap-2">
-									<div class="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-									<span class="text-sm">{tech}</span>
-								</div>
-							))
-						}
-					</div>
-				</div>
+        <!-- Backend -->
+        <div
+          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
+        >
+          <h3
+            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
+          >
+            Backend
+          </h3>
+          <div class="space-y-2">
+            {
+              techStack.backend.map((tech) => (
+                <div class="flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span class="text-sm">{tech}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
 
-				<!-- AI/ML -->
-				<div
-					class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-				>
-					<h3
-						class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-					>
-						AI/ML
-					</h3>
-					<div class="space-y-2">
-						{
-							techStack.ai_ml.map((tech) => (
-								<div class="flex items-center gap-2">
-									<div class="w-1.5 h-1.5 rounded-full bg-purple-500" />
-									<span class="text-sm">{tech}</span>
-								</div>
-							))
-						}
-					</div>
-				</div>
+        <!-- AI/ML -->
+        <div
+          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
+        >
+          <h3
+            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
+          >
+            AI/ML
+          </h3>
+          <div class="space-y-2">
+            {
+              techStack.ai_ml.map((tech) => (
+                <div class="flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                  <span class="text-sm">{tech}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
 
-				<!-- Tools -->
-				<div
-					class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-				>
-					<h3
-						class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-					>
-						Tools
-					</h3>
-					<div class="space-y-2">
-						{
-							techStack.tools.map((tech) => (
-								<div class="flex items-center gap-2">
-									<div class="w-1.5 h-1.5 rounded-full bg-amber-500" />
-									<span class="text-sm">{tech}</span>
-								</div>
-							))
-						}
-					</div>
-				</div>
-			</div>
-		</section>
+        <!-- Tools -->
+        <div
+          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
+        >
+          <h3
+            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
+          >
+            Tools
+          </h3>
+          <div class="space-y-2">
+            {
+              techStack.tools.map((tech) => (
+                <div class="flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                  <span class="text-sm">{tech}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<!-- CTA Section - Lead Generation -->
-		<section
-			class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-primary/10 via-card to-purple-500/10 p-8 md:p-12"
-		>
-			<div
-				class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(120,119,198,0.15),transparent_50%)]"
-			>
-			</div>
+    <!-- CTA Section - Lead Generation -->
+    <section
+      class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-primary/10 via-card to-purple-500/10 p-8 md:p-12"
+    >
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(120,119,198,0.15),transparent_50%)]"
+      >
+      </div>
 
-			<div class="relative z-10 max-w-2xl">
-				<div
-					class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6"
-				>
-					<Sparkles className="w-4 h-4" />
-					Open to Collaboration
-				</div>
+      <div class="relative z-10 max-w-2xl">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6"
+        >
+          <Sparkles className="w-4 h-4" />
+          Open to Opportunities
+        </div>
 
-				<h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-					Let's Build Something Together
-				</h2>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+          Let's Build Something Together
+        </h2>
 
-				<p class="text-lg text-muted-foreground mb-8 leading-relaxed">
-					I'm available for select consulting engagements, particularly
-					in AI implementation, computer vision applications, and
-					technical strategy. If you're working on something
-					interesting, I'd love to hear about it.
-				</p>
+        <p class="text-lg text-muted-foreground mb-8 leading-relaxed">
+          I'm always excited to meet fellow builders, creators, and investors
+          who share a passion for meaningful technology. Whether you want to
+          collaborate on a project or explore investment opportunities in our
+          venture studio, I'd love to connect.
+        </p>
 
-				<div class="flex flex-wrap gap-4">
-					<a
-						href={`mailto:${siteConfig.email}?subject=Consulting Inquiry`}
-						class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all hover:gap-3"
-					>
-						<Mail className="w-4 h-4" />
-						Consulting Inquiry
-						<ArrowRight className="w-4 h-4" />
-					</a>
-					<a
-						href={`mailto:${siteConfig.email}?subject=Investment Opportunity`}
-						class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-secondary text-secondary-foreground font-medium hover:bg-secondary/80 transition-colors"
-					>
-						Investment Discussion
-					</a>
-				</div>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href={`mailto:${siteConfig.email}?subject=Let's Collaborate`}
+            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all hover:gap-3"
+          >
+            <Mail className="w-4 h-4" />
+            Let's Collaborate
+            <ArrowRight className="w-4 h-4" />
+          </a>
+          <a
+            href={`mailto:${siteConfig.email}?subject=Investment Inquiry`}
+            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-secondary text-secondary-foreground font-medium hover:bg-secondary/80 transition-colors"
+          >
+            Invest With Us
+          </a>
+        </div>
 
-				<div
-					class="mt-8 pt-8 border-t border-white/5 text-sm text-muted-foreground"
-				>
-					<p class="font-medium text-foreground mb-2">
-						Typical engagements include:
-					</p>
-					<ul class="space-y-1">
-						<li>• AI/ML implementation strategy & architecture</li>
-						<li>• Computer vision system design</li>
-						<li>• Technical due diligence for AI startups</li>
-						<li>• Advisory roles for early-stage ventures</li>
-					</ul>
-				</div>
-			</div>
-		</section>
-	</div>
+        <div
+          class="mt-8 pt-8 border-t border-white/5 text-sm text-muted-foreground"
+        >
+          <p class="font-medium text-foreground mb-2">What I'm looking for:</p>
+          <ul class="space-y-1">
+            <li>• Co-founders & collaborators for AI-driven ventures</li>
+            <li>• Strategic partners in the creative tech space</li>
+            <li>• Angel investors & VCs interested in our portfolio</li>
+            <li>• Like-minded builders who want to create real impact</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
 
-	<Dock client:load />
+  <Dock client:load />
 </BaseLayout>

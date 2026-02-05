@@ -12,9 +12,7 @@ const isCompact = size === "compact";
 ---
 
 <a
-	href={project.href}
-	target="_blank"
-	rel="noopener noreferrer"
+	href={`/projects/${project.slug}`}
 	class:list={[
 		"group block rounded-xl border border-white/5 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/80",
 		isCompact ? "p-4" : "p-5",

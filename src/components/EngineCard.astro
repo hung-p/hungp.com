@@ -10,9 +10,7 @@ const { project } = Astro.props;
 ---
 
 <a
-	href={project.href}
-	target="_blank"
-	rel="noopener noreferrer"
+	href={`/projects/${project.slug}`}
 	class="group relative block overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-card to-muted/20 p-6 md:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1"
 >
 	<!-- Glow effect on hover -->

@@ -32,7 +32,7 @@ const posts = (await getCollection("blog"))
 							class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"
 						></span>
 					</span>
-					Available for AI consulting & collaboration
+					Available for collaboration
 				</div>
 
 				<!-- Main Headline -->
@@ -57,10 +57,8 @@ const posts = (await getCollection("blog"))
 				<p
 					class="text-base md:text-lg text-muted-foreground/80 max-w-2xl mb-10 leading-relaxed"
 				>
-					Building intelligent systems at the intersection of computer
-					vision and entrepreneurship. From Vietnam to Silicon Valley,
-					crafting technology that creates value.
-				</p>
+				{siteConfig.description}
+			</p>
 
 				<!-- CTAs -->
 				<div class="flex flex-wrap gap-4">
@@ -88,7 +86,7 @@ const posts = (await getCollection("blog"))
 					<MapPin className="w-4 h-4" />
 					<span>{siteConfig.location}</span>
 					<span class="text-muted-foreground/50">•</span>
-					<span>MS AI @ San Jose State</span>
+					<span>{siteConfig.university}</span>
 				</div>
 			</div>
 		</section>
@@ -97,7 +95,7 @@ const posts = (await getCollection("blog"))
 		<section>
 			<SectionHeader
 				title="Active Engines"
-				subtitle="Revenue-generating products and ventures in active development. These are the systems that power the studio."
+				subtitle="The core projects driving the studio forward. Built to solve real problems and serve real users."
 			/>
 
 			<div class="grid gap-6">
@@ -163,7 +161,7 @@ const posts = (await getCollection("blog"))
 			</div>
 			<div class="text-center">
 				<div class="text-3xl md:text-4xl font-bold text-foreground mb-1">
-					5+
+					10+
 				</div>
 				<div class="text-sm text-muted-foreground">Years in Tech</div>
 			</div>

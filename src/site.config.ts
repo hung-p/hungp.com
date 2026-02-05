@@ -2,7 +2,8 @@ import type { SiteConfig } from './types';
 
 export const siteConfig: SiteConfig = {
 	title: 'Hung Pham',
-	description: 'AI Engineer, Venture Architect, & Computer Vision Researcher. Building at the intersection of technology and creativity.',
+	tagline: 'AI Engineer & Venture Builder.',
+	description: 'From Vietnam to Silicon Valley, I build AI-powered products that actually matter. Currently pursuing my Master\'s in AI while running a venture studio with 60k+ users across our portfolio.',
 	lang: 'en-US',
 	author: 'Hung Pham',
 	github: 'https://github.com/hung-p',
@@ -10,7 +11,7 @@ export const siteConfig: SiteConfig = {
 	linkedin: 'https://linkedin.com/in/hung-p',
 	email: 'hello@hungp.com',
 	location: 'San Jose, CA',
-	tagline: 'AI Engineer, Venture Architect, & Computer Vision Researcher.',
+	university: 'San Jose State University',
 };
 
 export const menuLinks = [
