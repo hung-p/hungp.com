@@ -195,7 +195,11 @@ const chartBars = [58, 82, 44, 92, 66, 74, 52];
 <style>
 	.scene {
 		position: relative;
-		padding-block: clamp(4.5rem, 13vh, 9rem);
+		padding-block: clamp(2rem, 6vh, 4.5rem);
+	}
+	/* extra top room for the first scene so it never crowds the section heading */
+	.scene:first-child {
+		padding-top: clamp(3.5rem, 9vh, 6rem);
 	}
 	.scene > div:nth-child(2) {
 		position: relative;
@@ -232,8 +236,7 @@ const chartBars = [58, 82, 44, 92, 66, 74, 52];
 	@media (min-width: 1024px) {
 		.visual-sticky {
 			position: sticky;
-			top: 50%;
-			transform: translateY(-50%);
+			top: 20vh;
 		}
 	}
 	.browser {
