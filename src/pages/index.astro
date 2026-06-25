@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Dock } from "../components/Dock";
 import ProjectScene from "../components/ProjectScene.astro";
+import ShowcaseRail from "../components/ShowcaseRail.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import { tier1Projects } from "../data/projects";
 import { ArrowRight, ArrowDown } from "lucide-react";
@@ -141,6 +142,8 @@ const steps = [
 					subtitle="A few personal projects in active development, built to be genuinely useful and getting better every week."
 				/>
 			</div>
+
+			<ShowcaseRail projects={featured} />
 
 			<div class="mt-4 md:mt-6">
 				{featured.map((project, i) => <ProjectScene project={project} index={i} />)}
