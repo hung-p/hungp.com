@@ -173,6 +173,15 @@ const steps = [
 		sparkSpeed: 3.5, // how fast sparkles fly out
 		sparkFade: 0.02, // how fast sparkles fade (↑ = shorter)
 		glow: 14, // glow (blur) on the ring + sparks
+
+		// Overheat → explosion (hold the cursor still and let particles gather)
+		heatRadius: 5, // particles inside this inner ring heat up
+		heatRise: 0.02, // how fast they heat while lingering (↑ = explodes sooner)
+		heatFall: 0.018, // how fast they cool once they drift out
+		explodeRadius: 350, // blast radius when a particle overheats
+		explodePush: 22, // how hard the blast flings particles (↑ = farther)
+		explodeSparks: 15, // sparks thrown by an explosion
+		explodeSparkSpeed: 5.5, // how fast explosion sparks fly
 	};
 	// ────────────────────────────────────────────────────────────────────────
 
@@ -184,7 +193,7 @@ const steps = [
 		const dpr = Math.min(window.devicePixelRatio || 1, 2);
 		let w = 0;
 		let h = 0;
-		// vx/vy = permanent free drift · px/py = decaying pull/push layer
+		// vx/vy = permanent free drift · px/py = decaying pull/push · heat = 0..1
 		let nodes: {
 			x: number;
 			y: number;
@@ -192,13 +201,21 @@ const steps = [
 			vy: number;
 			px: number;
 			py: number;
+			heat: number;
 		}[] = [];
-		let ripples: { x: number; y: number; r: number; a: number }[] = [];
-		let sparks: { x: number; y: number; vx: number; vy: number; life: number }[] =
-			[];
+		let ripples: { x: number; y: number; r: number; a: number; c: string }[] = [];
+		let sparks: {
+			x: number;
+			y: number;
+			vx: number;
+			vy: number;
+			life: number;
+			c: string;
+		}[] = [];
 		const mouse = { x: -9999, y: -9999 };
 		let brand = "217 91% 60%";
 		let fg = "0 0% 96%";
+		const HOT = "8 90% 56%"; // red-orange for overheat explosions
 		let raf = 0;
 
 		const readColors = () => {
@@ -227,26 +244,75 @@ const steps = [
 					vy: (Math.random() - 0.5) * CONFIG.driftSpeed,
 					px: 0,
 					py: 0,
+					heat: 0,
 				});
+			}
+		};
+
+		// Blast: fling nearby particles outward + red ring + red sparks
+		const explode = (x: number, y: number) => {
+			ripples.push({ x, y, r: 0, a: 0.85, c: HOT });
+			for (let i = 0; i < CONFIG.explodeSparks; i++) {
+				const ang =
+					(Math.PI * 2 * i) / CONFIG.explodeSparks + Math.random() * 0.5;
+				const spd = 3 + Math.random() * CONFIG.explodeSparkSpeed;
+				sparks.push({
+					x,
+					y,
+					vx: Math.cos(ang) * spd,
+					vy: Math.sin(ang) * spd,
+					life: 1,
+					c: HOT,
+				});
+			}
+			const ER = CONFIG.explodeRadius;
+			for (const n of nodes) {
+				const dx = n.x - x;
+				const dy = n.y - y;
+				const d2 = dx * dx + dy * dy;
+				if (d2 < ER * ER) {
+					const d = Math.sqrt(d2) || 1;
+					const imp = (1 - d / ER) * CONFIG.explodePush;
+					n.px += (dx / d) * imp;
+					n.py += (dy / d) * imp;
+					n.heat = 0; // reset so it can't instantly re-detonate
+				}
 			}
 		};
 
 		const step = () => {
 			const active = mouse.x > -9000;
 			const R = CONFIG.pullRadius;
+			const HR = CONFIG.heatRadius;
+			let blastX = -1;
+			let blastY = -1;
 			for (const n of nodes) {
-				// gentle pull toward the cursor — only for nearby nodes
 				if (active) {
 					const dx = mouse.x - n.x;
 					const dy = mouse.y - n.y;
 					const d2 = dx * dx + dy * dy;
+					// gentle pull toward the cursor — only for nearby nodes
 					if (d2 < R * R) {
 						const d = Math.sqrt(d2) || 1;
 						const f = (1 - d / R) * CONFIG.pullStrength;
 						n.px += (dx / d) * f;
 						n.py += (dy / d) * f;
 					}
+					// lingering in the small inner radius heats the particle up
+					if (d2 < HR * HR) {
+						n.heat += CONFIG.heatRise;
+						if (n.heat >= 1) {
+							n.heat = 0;
+							blastX = mouse.x;
+							blastY = mouse.y;
+						}
+					} else {
+						n.heat -= CONFIG.heatFall;
+					}
+				} else {
+					n.heat -= CONFIG.heatFall;
 				}
+				if (n.heat < 0) n.heat = 0;
 				// move: constant free drift + decaying pull/push
 				n.x += n.vx + n.px;
 				n.y += n.vy + n.py;
@@ -273,10 +339,11 @@ const steps = [
 				n.px *= CONFIG.decay;
 				n.py *= CONFIG.decay;
 			}
+			if (blastX >= 0) explode(blastX, blastY);
 			// ripples expand & fade
 			for (let i = ripples.length - 1; i >= 0; i--) {
 				const rp = ripples[i];
-				rp.r += (CONFIG.clickRadius - rp.r) * 0.06 + 2;
+				rp.r += (CONFIG.explodeRadius - rp.r) * 0.06 + 2;
 				rp.a *= 0.93;
 				if (rp.a < 0.02) ripples.splice(i, 1);
 			}
@@ -309,16 +376,29 @@ const steps = [
 					ctx.lineTo(mouse.x, mouse.y);
 					ctx.stroke();
 				}
-				ctx.fillStyle = near ? `hsl(${brand} / 0.9)` : `hsl(${fg} / 0.22)`;
-				ctx.beginPath();
-				ctx.arc(
-					a.x,
-					a.y,
-					near ? CONFIG.nodeRadiusNear : CONFIG.nodeRadius,
-					0,
-					Math.PI * 2,
-				);
-				ctx.fill();
+				if (a.heat > 0.02) {
+					// heating up: amber → red, growing and glowing
+					const hue = 40 * (1 - a.heat);
+					ctx.save();
+					ctx.shadowBlur = 6 + a.heat * 16;
+					ctx.shadowColor = `hsl(${hue} 95% 55%)`;
+					ctx.fillStyle = `hsl(${hue} 95% ${60 - a.heat * 10}%)`;
+					ctx.beginPath();
+					ctx.arc(a.x, a.y, CONFIG.nodeRadius + 1.2 + a.heat * 3.5, 0, Math.PI * 2);
+					ctx.fill();
+					ctx.restore();
+				} else {
+					ctx.fillStyle = near ? `hsl(${brand} / 0.9)` : `hsl(${fg} / 0.22)`;
+					ctx.beginPath();
+					ctx.arc(
+						a.x,
+						a.y,
+						near ? CONFIG.nodeRadiusNear : CONFIG.nodeRadius,
+						0,
+						Math.PI * 2,
+					);
+					ctx.fill();
+				}
 				for (let j = i + 1; j < nodes.length; j++) {
 					const b = nodes[j];
 					const d = Math.hypot(a.x - b.x, a.y - b.y);
@@ -332,20 +412,21 @@ const steps = [
 					}
 				}
 			}
-			// click visuals — glowing rings + sparks
+			// click / explosion visuals — glowing rings + sparks
 			if (ripples.length || sparks.length) {
 				ctx.save();
 				ctx.shadowBlur = CONFIG.glow;
-				ctx.shadowColor = `hsl(${brand} / 0.9)`;
 				for (const rp of ripples) {
-					ctx.strokeStyle = `hsl(${brand} / ${rp.a})`;
+					ctx.shadowColor = `hsl(${rp.c} / 0.9)`;
+					ctx.strokeStyle = `hsl(${rp.c} / ${rp.a})`;
 					ctx.lineWidth = 2;
 					ctx.beginPath();
 					ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
 					ctx.stroke();
 				}
 				for (const s of sparks) {
-					ctx.fillStyle = `hsl(${brand} / ${Math.max(s.life, 0)})`;
+					ctx.shadowColor = `hsl(${s.c} / 0.9)`;
+					ctx.fillStyle = `hsl(${s.c} / ${Math.max(s.life, 0)})`;
 					ctx.beginPath();
 					ctx.arc(s.x, s.y, 1.9, 0, Math.PI * 2);
 					ctx.fill();
@@ -390,7 +471,7 @@ const steps = [
 			const x = e.clientX - r.left;
 			const y = e.clientY - r.top;
 			if (x < 0 || x > r.width || y < 0 || y > r.height) return;
-			ripples.push({ x, y, r: 0, a: 0.6 });
+			ripples.push({ x, y, r: 0, a: 0.6, c: brand });
 			for (let i = 0; i < CONFIG.sparks; i++) {
 				const ang = (Math.PI * 2 * i) / CONFIG.sparks + Math.random() * 0.5;
 				const spd = 2 + Math.random() * CONFIG.sparkSpeed;
@@ -400,6 +481,7 @@ const steps = [
 					vx: Math.cos(ang) * spd,
 					vy: Math.sin(ang) * spd,
 					life: 1,
+					c: brand,
 				});
 			}
 			const CR = CONFIG.clickRadius;
