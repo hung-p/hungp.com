@@ -1,4 +1,12 @@
-@import "@fontsource/geist-sans";
+/* Self-hosted Geist — real weights so headings aren't faux-bolded */
+@import "@fontsource/geist-sans/300.css";
+@import "@fontsource/geist-sans/400.css";
+@import "@fontsource/geist-sans/500.css";
+@import "@fontsource/geist-sans/600.css";
+@import "@fontsource/geist-sans/700.css";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
+@import "@fontsource/geist-mono/600.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -116,6 +124,18 @@
   ::selection {
     background-color: hsl(var(--brand) / 0.28);
     color: hsl(var(--foreground));
+  }
+
+  /* Visible keyboard focus for all interactive elements */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid hsl(var(--brand));
+    outline-offset: 2px;
+  }
+  /* Don't show the focus ring for mouse clicks */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus:not(
+      :focus-visible
+    ) {
+    outline: none;
   }
 
   /* Smooth theme transition on color-bearing properties only */

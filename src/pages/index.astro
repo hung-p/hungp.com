@@ -6,13 +6,13 @@ import SectionHeader from "../components/SectionHeader.astro";
 import { tier1Projects } from "../data/projects";
 import { ArrowRight, ArrowDown } from "lucide-react";
 
-const featured = tier1Projects.slice(0, 3);
+const featured = tier1Projects.slice(0, 4);
 
 const steps = [
-	{ n: "01", word: "Listen" },
-	{ n: "02", word: "Build" },
-	{ n: "03", word: "Ship" },
-	{ n: "04", word: "Iterate" },
+	{ n: "01", word: "Listen", desc: "Find a real problem worth solving." },
+	{ n: "02", word: "Build", desc: "Make the smallest useful version." },
+	{ n: "03", word: "Ship", desc: "Get it into people's hands." },
+	{ n: "04", word: "Iterate", desc: "Learn from real use, then improve." },
 ];
 ---
 
@@ -97,15 +97,25 @@ const steps = [
 			>
 				<p class="eyebrow mb-4">How I build</p>
 				<div
+					id="how-steps"
 					class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4"
 				>
 					{
-						steps.map((s) => (
-							<div class="group bg-background px-5 py-6 transition-colors hover:bg-surface">
-								<div class="font-mono text-[12px] text-subtle">{s.n}</div>
-								<div class="mt-1.5 font-mono text-2xl font-semibold tracking-tight transition-colors group-hover:text-brand-2 md:text-3xl">
+						steps.map((s, i) => (
+							<div
+								data-step={i}
+								class="group/step relative bg-background px-5 py-6 transition-colors hover:bg-surface data-[active]:bg-surface"
+							>
+								<span class="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-500 group-hover/step:scale-x-100 group-data-[active]/step:scale-x-100" />
+								<div class="font-mono text-[12px] text-subtle transition-colors group-hover/step:text-brand-2 group-data-[active]/step:text-brand-2">
+									{s.n}
+								</div>
+								<div class="mt-1.5 font-mono text-2xl font-semibold tracking-tight transition-colors group-hover/step:text-brand-2 group-data-[active]/step:text-brand-2 md:text-3xl">
 									{s.word}
 								</div>
+								<p class="mt-2 h-9 text-[12.5px] leading-snug text-muted-foreground opacity-0 transition-opacity duration-500 group-hover/step:opacity-100 group-data-[active]/step:opacity-100">
+									{s.desc}
+								</p>
 							</div>
 						))
 					}
@@ -113,23 +123,26 @@ const steps = [
 			</div>
 
 			<!-- Scroll cue -->
-			<div
-				class="pointer-events-none absolute bottom-3 left-1/2 z-10 hidden -translate-x-1/2 text-subtle md:block"
+			<button
+				type="button"
+				data-scroll-to="#work"
+				aria-label="Scroll to projects"
+				class="absolute bottom-3 left-1/2 z-10 hidden -translate-x-1/2 rounded-full p-2 text-subtle transition-colors hover:text-foreground md:block"
 			>
 				<ArrowDown className="h-4 w-4 animate-bounce" />
-			</div>
+			</button>
 		</section>
 
 		<!-- What I'm building -->
-		<section>
+		<section id="work" class="scroll-mt-24">
 			<div class="reveal">
 				<SectionHeader
 					title="What I'm building"
-					subtitle="A few personal projects in active development — built to be genuinely useful, and to get better every week."
+					subtitle="A few personal projects in active development, built to be genuinely useful and getting better every week."
 				/>
 			</div>
 
-			<div class="grid gap-5">
+			<div class="grid gap-5 sm:grid-cols-2">
 				{featured.map((project) => <div class="reveal"><EngineCard project={project} /></div>)}
 			</div>
 
@@ -524,4 +537,39 @@ const steps = [
 		if (reduce) draw();
 		else start();
 	}
+</script>
+
+<script>
+	// "How I build" — auto-cycle the active step; pause and follow on hover.
+	(function () {
+		const boxes = Array.from(
+			document.querySelectorAll<HTMLElement>("[data-step]"),
+		);
+		if (!boxes.length) return;
+		let i = 0;
+		let paused = false;
+		const setActive = (n: number) => {
+			boxes.forEach((b, k) =>
+				k === n
+					? b.setAttribute("data-active", "")
+					: b.removeAttribute("data-active"),
+			);
+			i = n;
+		};
+		boxes.forEach((b, k) => {
+			b.addEventListener("pointerenter", () => {
+				paused = true;
+				setActive(k);
+			});
+			b.addEventListener("pointerleave", () => {
+				paused = false;
+			});
+		});
+		setActive(0);
+		if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			window.setInterval(() => {
+				if (!paused) setActive((i + 1) % boxes.length);
+			}, 2400);
+		}
+	})();
 </script>

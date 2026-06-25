@@ -8,8 +8,8 @@ import { Hammer, Beaker } from "lucide-react";
 ---
 
 <BaseLayout
-	title="Projects | Hung Pham — what I'm building"
-	description="A handful of personal projects in active development — built to be genuinely useful. Including AIGallery, VeganForReal, and more."
+	title="Projects | Hung Pham"
+	description="A handful of personal projects in active development, built to be genuinely useful. Including AIGallery, VeganForReal, and more."
 >
 	<div class="space-y-20 md:space-y-28">
 		<!-- Header -->
@@ -22,8 +22,8 @@ import { Hammer, Beaker } from "lucide-react";
 					Things I'm currently building.
 				</h1>
 				<p class="mt-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
-					A handful of personal projects — some live and growing, others
-					early experiments still finding their shape. All built to be
+					A handful of personal projects. Some are live and growing, others
+					still early experiments finding their shape. All built to be
 					genuinely useful.
 				</p>
 			</div>
@@ -47,7 +47,7 @@ import { Hammer, Beaker } from "lucide-react";
 				</div>
 			</div>
 
-			<div class="grid gap-5">
+			<div class="grid gap-5 sm:grid-cols-2">
 				{tier1Projects.map((project) => <div class="reveal"><EngineCard project={project} /></div>)}
 			</div>
 		</section>
@@ -90,7 +90,7 @@ import { Hammer, Beaker } from "lucide-react";
 				<div>
 					<h3 class="mb-2 font-medium text-foreground">Build in public</h3>
 					<p class="text-sm leading-relaxed text-muted-foreground">
-						Share the process, not just the result — the wins, the dead
+						Share the process, not just the result: the wins, the dead
 						ends, and what I learned along the way.
 					</p>
 				</div>

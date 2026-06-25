@@ -53,6 +53,14 @@ const {
     <body
         class="min-h-screen overflow-x-hidden bg-background font-sans text-foreground antialiased"
     >
+        <!-- Skip to content (keyboard users) -->
+        <a
+            href="#main"
+            class="sr-only z-[80] rounded-lg bg-brand px-4 py-2 font-medium text-brand-foreground focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+            Skip to content
+        </a>
+
         <!-- Ambient background -->
         <div class="bg-grid" aria-hidden="true"></div>
         <div class="bg-glow" aria-hidden="true"></div>
@@ -62,7 +70,9 @@ const {
 
         <main class="relative flex min-h-screen flex-col">
             <div
-                class="w-full flex-1 mx-auto max-w-[1120px] px-4 py-8 md:px-8 md:py-14"
+                id="main"
+                tabindex="-1"
+                class="w-full flex-1 mx-auto max-w-[1120px] px-4 py-8 outline-none md:px-8 md:py-14"
             >
                 <slot />
             </div>
@@ -138,6 +148,71 @@ const {
                         });
                     }
                 }
+            })();
+        </script>
+
+        <!-- Click-to-copy (e.g. email) + back-to-top, via event delegation -->
+        <script is:inline>
+            (function () {
+                function flash(el) {
+                    var label = el.querySelector("[data-copy-label]");
+                    el.setAttribute("data-copied", "");
+                    if (label) {
+                        if (label.dataset.original == null)
+                            label.dataset.original = label.textContent;
+                        label.textContent = "Copied!";
+                    }
+                    window.clearTimeout(el.__copyT);
+                    el.__copyT = window.setTimeout(function () {
+                        el.removeAttribute("data-copied");
+                        if (label && label.dataset.original != null)
+                            label.textContent = label.dataset.original;
+                    }, 1600);
+                }
+                document.addEventListener("click", function (e) {
+                    var t = e.target;
+                    var copyEl = t.closest ? t.closest("[data-copy]") : null;
+                    if (copyEl) {
+                        e.preventDefault();
+                        var val = copyEl.getAttribute("data-copy");
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(val).then(
+                                function () { flash(copyEl); },
+                                function () { flash(copyEl); },
+                            );
+                        } else {
+                            var ta = document.createElement("textarea");
+                            ta.value = val;
+                            ta.setAttribute("readonly", "");
+                            ta.style.position = "absolute";
+                            ta.style.left = "-9999px";
+                            document.body.appendChild(ta);
+                            ta.select();
+                            try { document.execCommand("copy"); } catch (_) {}
+                            document.body.removeChild(ta);
+                            flash(copyEl);
+                        }
+                        return;
+                    }
+                    var topEl = t.closest ? t.closest("[data-scroll-top]") : null;
+                    if (topEl) {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        return;
+                    }
+                    var goEl = t.closest ? t.closest("[data-scroll-to]") : null;
+                    if (goEl) {
+                        e.preventDefault();
+                        var target = document.querySelector(
+                            goEl.getAttribute("data-scroll-to"),
+                        );
+                        if (target)
+                            target.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start",
+                            });
+                    }
+                });
             })();
         </script>
     </body>

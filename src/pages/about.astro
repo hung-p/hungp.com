@@ -8,7 +8,6 @@ import {
   Github,
   Linkedin,
   Twitter,
-  ArrowRight,
   Hammer,
   Layers,
   RefreshCw,
@@ -26,7 +25,7 @@ const stackGroups = [
 
 <BaseLayout
   title="About Hung Pham | Engineer & Builder"
-  description="Hung Pham builds useful products that people actually use — a few personal projects in active development."
+  description="Hung Pham builds useful products that people actually use. A few personal projects in active development."
 >
   <div class="space-y-16 md:space-y-24">
     <!-- Intro -->
@@ -44,7 +43,7 @@ const stackGroups = [
 
           <div class="reveal space-y-5">
             <p class="text-base leading-relaxed text-muted-foreground md:text-[17px]">
-              I build products — and what I care about most is whether people
+              I build products, and what I care about most is whether people
               <span class="font-medium text-foreground">actually use them</span>.
               Not demos, not slides that look good in a pitch. Things that earn a
               place in someone's day.
@@ -53,13 +52,13 @@ const stackGroups = [
               Right now that's a <span class="font-medium text-brand-2"
                 >handful of personal projects</span
               >, all in active development. Some are live and growing; others are
-              early experiments still finding their shape — but each one is aimed
+              early experiments still finding their shape, but each one is aimed
               at a real problem worth solving.
             </p>
             <p class="text-base leading-relaxed text-muted-foreground md:text-[17px]">
               I'm an engineer by training, and <span
                 class="font-medium text-foreground">AI is one of the tools</span
-              > I reach for — but it's never the point. The point is the product:
+              > I reach for, but it's never the point. The point is the product:
               useful, well-made, and worth coming back to. I care about shipping,
               listening, and making the next version better.
             </p>
@@ -126,13 +125,15 @@ const stackGroups = [
                 <Twitter className="h-4 w-4" />
                 <span>Twitter / X</span>
               </a>
-              <a
-                href={`mailto:${siteConfig.email}`}
-                class="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
+              <button
+                type="button"
+                data-copy={siteConfig.email}
+                aria-label={`Copy email ${siteConfig.email}`}
+                class="-mx-2 flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground data-[copied]:text-live"
               >
                 <Mail className="h-4 w-4" />
-                <span>{siteConfig.email}</span>
-              </a>
+                <span data-copy-label>{siteConfig.email}</span>
+              </button>
             </div>
           </div>
         </div>
@@ -194,14 +195,15 @@ const stackGroups = [
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
-          <a
-            href={`mailto:${siteConfig.email}?subject=Hello`}
+          <button
+            type="button"
+            data-copy={siteConfig.email}
+            aria-label={`Copy email ${siteConfig.email}`}
             class="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 font-medium text-brand-foreground shadow-lg shadow-brand/20 transition-all hover:-translate-y-0.5 hover:gap-3 hover:shadow-xl hover:shadow-brand/30"
           >
             <Mail className="h-4 w-4" />
-            Say hello
-            <ArrowRight className="h-4 w-4" />
-          </a>
+            <span data-copy-label>{siteConfig.email}</span>
+          </button>
           <a
             href="/projects"
             class="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 py-3 font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-foreground/15 hover:bg-surface-2"

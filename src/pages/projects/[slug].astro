@@ -122,6 +122,31 @@ const related = allProjects.filter((p) => p.slug !== project.slug).slice(0, 3);
 			</div>
 		</section>
 
+		<!-- Screenshot -->
+		<section class="reveal mt-12 max-w-4xl">
+			<div
+				class="relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface"
+			>
+				{
+					project.image ? (
+						<img
+							src={project.image}
+							alt={`${project.title} screenshot`}
+							loading="lazy"
+							decoding="async"
+							class="absolute inset-0 h-full w-full object-cover"
+						/>
+					) : (
+						<div class="absolute inset-0 grid place-items-center bg-gradient-to-br from-brand/20 via-surface to-surface-2">
+							<span class="font-mono text-7xl font-bold text-foreground/10">
+								{project.title.trim().charAt(0).toUpperCase()}
+							</span>
+						</div>
+					)
+				}
+			</div>
+		</section>
+
 		<!-- Body -->
 		<section class="reveal mt-14 max-w-3xl">
 			{
