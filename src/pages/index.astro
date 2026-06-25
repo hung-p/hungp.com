@@ -68,8 +68,8 @@ const steps = [
 					<p
 						class="reveal mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl"
 					>
-						A handful of personal projects, all in active development —
-						each built to solve a real problem and be genuinely useful,
+						A handful of personal projects, all in active development.<br/>
+						Each built to solve a real problem and be genuinely useful,
 						not just another demo.
 					</p>
 
@@ -149,7 +149,33 @@ const steps = [
 </BaseLayout>
 
 <script>
-	// Interactive node-mesh hero effect (conveys network / building feel)
+	// ─── Hero node-mesh — tweak these to taste ──────────────────────────────
+	const CONFIG = {
+		// Particles
+		areaPerNode: 17000, // smaller = MORE particles (canvas px² per node)
+		minNodes: 36,
+		maxNodes: 110,
+		driftSpeed: 0.65, // base roaming speed of particles (↑ = faster)
+		nodeRadius: 1.5, // dot size at rest
+		nodeRadiusNear: 2.3, // dot size when near the cursor
+		linkDistance: 132, // max distance to draw a line between two particles
+		linkOpacity: 0.16, // strength of the connecting lines
+
+		// Cursor pull (only affects nearby particles)
+		pullRadius: 190, // how close a particle must be to feel the pull
+		pullStrength: 0.25, // how hard the cursor tugs (↓ = gentler)
+		decay: 0.9, // how fast the pull/push fades back to free drift
+
+		// Click shockwave
+		clickRadius: 230, // how far the click pushes particles
+		clickPush: 7, // strength of the outward shove
+		sparks: 18, // number of sparkles per click
+		sparkSpeed: 3.5, // how fast sparkles fly out
+		sparkFade: 0.02, // how fast sparkles fade (↑ = shorter)
+		glow: 14, // glow (blur) on the ring + sparks
+	};
+	// ────────────────────────────────────────────────────────────────────────
+
 	const canvas = document.getElementById("hero-net") as HTMLCanvasElement | null;
 	const ctx = canvas?.getContext("2d") ?? null;
 
@@ -158,12 +184,21 @@ const steps = [
 		const dpr = Math.min(window.devicePixelRatio || 1, 2);
 		let w = 0;
 		let h = 0;
-		let nodes: { x: number; y: number; vx: number; vy: number }[] = [];
+		// vx/vy = permanent free drift · px/py = decaying pull/push layer
+		let nodes: {
+			x: number;
+			y: number;
+			vx: number;
+			vy: number;
+			px: number;
+			py: number;
+		}[] = [];
+		let ripples: { x: number; y: number; r: number; a: number }[] = [];
+		let sparks: { x: number; y: number; vx: number; vy: number; life: number }[] =
+			[];
 		const mouse = { x: -9999, y: -9999 };
 		let brand = "217 91% 60%";
 		let fg = "0 0% 96%";
-		const CONNECT = 132;
-		const MOUSE_R = 180;
 		let raf = 0;
 
 		const readColors = () => {
@@ -179,35 +214,94 @@ const steps = [
 			canvas.width = Math.floor(w * dpr);
 			canvas.height = Math.floor(h * dpr);
 			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-			const count = Math.min(110, Math.max(36, Math.floor((w * h) / 17000)));
+			const count = Math.min(
+				CONFIG.maxNodes,
+				Math.max(CONFIG.minNodes, Math.floor((w * h) / CONFIG.areaPerNode)),
+			);
 			nodes = [];
 			for (let i = 0; i < count; i++) {
 				nodes.push({
 					x: Math.random() * w,
 					y: Math.random() * h,
-					vx: (Math.random() - 0.5) * 0.25,
-					vy: (Math.random() - 0.5) * 0.25,
+					vx: (Math.random() - 0.5) * CONFIG.driftSpeed,
+					vy: (Math.random() - 0.5) * CONFIG.driftSpeed,
+					px: 0,
+					py: 0,
 				});
 			}
 		};
 
 		const step = () => {
+			const active = mouse.x > -9000;
+			const R = CONFIG.pullRadius;
 			for (const n of nodes) {
-				n.x += n.vx;
-				n.y += n.vy;
-				if (n.x < 0 || n.x > w) n.vx *= -1;
-				if (n.y < 0 || n.y > h) n.vy *= -1;
+				// gentle pull toward the cursor — only for nearby nodes
+				if (active) {
+					const dx = mouse.x - n.x;
+					const dy = mouse.y - n.y;
+					const d2 = dx * dx + dy * dy;
+					if (d2 < R * R) {
+						const d = Math.sqrt(d2) || 1;
+						const f = (1 - d / R) * CONFIG.pullStrength;
+						n.px += (dx / d) * f;
+						n.py += (dy / d) * f;
+					}
+				}
+				// move: constant free drift + decaying pull/push
+				n.x += n.vx + n.px;
+				n.y += n.vy + n.py;
+				// bounce off edges so they keep roaming in-bounds
+				if (n.x < 0) {
+					n.x = 0;
+					n.vx = Math.abs(n.vx);
+					n.px *= -0.5;
+				} else if (n.x > w) {
+					n.x = w;
+					n.vx = -Math.abs(n.vx);
+					n.px *= -0.5;
+				}
+				if (n.y < 0) {
+					n.y = 0;
+					n.vy = Math.abs(n.vy);
+					n.py *= -0.5;
+				} else if (n.y > h) {
+					n.y = h;
+					n.vy = -Math.abs(n.vy);
+					n.py *= -0.5;
+				}
+				// the pull/push fades, leaving the original drift
+				n.px *= CONFIG.decay;
+				n.py *= CONFIG.decay;
+			}
+			// ripples expand & fade
+			for (let i = ripples.length - 1; i >= 0; i--) {
+				const rp = ripples[i];
+				rp.r += (CONFIG.clickRadius - rp.r) * 0.06 + 2;
+				rp.a *= 0.93;
+				if (rp.a < 0.02) ripples.splice(i, 1);
+			}
+			// sparks fly out & fade
+			for (let i = sparks.length - 1; i >= 0; i--) {
+				const s = sparks[i];
+				s.x += s.vx;
+				s.y += s.vy;
+				s.vx *= 0.94;
+				s.vy *= 0.94;
+				s.life -= CONFIG.sparkFade;
+				if (s.life <= 0) sparks.splice(i, 1);
 			}
 		};
 
 		const draw = () => {
+			const R = CONFIG.pullRadius;
+			const LINK = CONFIG.linkDistance;
 			ctx.clearRect(0, 0, w, h);
 			for (let i = 0; i < nodes.length; i++) {
 				const a = nodes[i];
 				const dm = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-				const near = dm < MOUSE_R;
+				const near = dm < R;
 				if (near) {
-					const o = (1 - dm / MOUSE_R) * 0.5;
+					const o = (1 - dm / R) * 0.5;
 					ctx.strokeStyle = `hsl(${brand} / ${o})`;
 					ctx.lineWidth = 1;
 					ctx.beginPath();
@@ -217,13 +311,19 @@ const steps = [
 				}
 				ctx.fillStyle = near ? `hsl(${brand} / 0.9)` : `hsl(${fg} / 0.22)`;
 				ctx.beginPath();
-				ctx.arc(a.x, a.y, near ? 2.3 : 1.5, 0, Math.PI * 2);
+				ctx.arc(
+					a.x,
+					a.y,
+					near ? CONFIG.nodeRadiusNear : CONFIG.nodeRadius,
+					0,
+					Math.PI * 2,
+				);
 				ctx.fill();
 				for (let j = i + 1; j < nodes.length; j++) {
 					const b = nodes[j];
 					const d = Math.hypot(a.x - b.x, a.y - b.y);
-					if (d < CONNECT) {
-						ctx.strokeStyle = `hsl(${fg} / ${(1 - d / CONNECT) * 0.16})`;
+					if (d < LINK) {
+						ctx.strokeStyle = `hsl(${fg} / ${(1 - d / LINK) * CONFIG.linkOpacity})`;
 						ctx.lineWidth = 1;
 						ctx.beginPath();
 						ctx.moveTo(a.x, a.y);
@@ -231,6 +331,26 @@ const steps = [
 						ctx.stroke();
 					}
 				}
+			}
+			// click visuals — glowing rings + sparks
+			if (ripples.length || sparks.length) {
+				ctx.save();
+				ctx.shadowBlur = CONFIG.glow;
+				ctx.shadowColor = `hsl(${brand} / 0.9)`;
+				for (const rp of ripples) {
+					ctx.strokeStyle = `hsl(${brand} / ${rp.a})`;
+					ctx.lineWidth = 2;
+					ctx.beginPath();
+					ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+					ctx.stroke();
+				}
+				for (const s of sparks) {
+					ctx.fillStyle = `hsl(${brand} / ${Math.max(s.life, 0)})`;
+					ctx.beginPath();
+					ctx.arc(s.x, s.y, 1.9, 0, Math.PI * 2);
+					ctx.fill();
+				}
+				ctx.restore();
 			}
 		};
 
@@ -263,6 +383,39 @@ const steps = [
 			},
 			{ passive: true },
 		);
+
+		// Click → glowing shockwave: push nearby nodes out + ring + sparks
+		window.addEventListener("pointerdown", (e) => {
+			const r = canvas.getBoundingClientRect();
+			const x = e.clientX - r.left;
+			const y = e.clientY - r.top;
+			if (x < 0 || x > r.width || y < 0 || y > r.height) return;
+			ripples.push({ x, y, r: 0, a: 0.6 });
+			for (let i = 0; i < CONFIG.sparks; i++) {
+				const ang = (Math.PI * 2 * i) / CONFIG.sparks + Math.random() * 0.5;
+				const spd = 2 + Math.random() * CONFIG.sparkSpeed;
+				sparks.push({
+					x,
+					y,
+					vx: Math.cos(ang) * spd,
+					vy: Math.sin(ang) * spd,
+					life: 1,
+				});
+			}
+			const CR = CONFIG.clickRadius;
+			for (const n of nodes) {
+				const dx = n.x - x;
+				const dy = n.y - y;
+				const d2 = dx * dx + dy * dy;
+				if (d2 < CR * CR) {
+					const d = Math.sqrt(d2) || 1;
+					const imp = (1 - d / CR) * CONFIG.clickPush;
+					n.px += (dx / d) * imp;
+					n.py += (dy / d) * imp;
+				}
+			}
+			if (!reduce) start();
+		});
 
 		readColors();
 		resize();
