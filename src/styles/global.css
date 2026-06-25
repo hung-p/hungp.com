@@ -121,9 +121,16 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* No highlight box — selected text just lights up in the accent color */
   ::selection {
-    background-color: hsl(var(--brand) / 0.28);
-    color: hsl(var(--foreground));
+    background: transparent;
+    color: hsl(var(--brand-2));
+    text-shadow: 0 0 8px hsl(var(--brand) / 0.45);
+  }
+  ::-moz-selection {
+    background: transparent;
+    color: hsl(var(--brand-2));
+    text-shadow: 0 0 8px hsl(var(--brand) / 0.45);
   }
 
   /* Visible keyboard focus for all interactive elements */
