@@ -34,7 +34,7 @@ const steps = [
 			<div
 				class="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 items-center px-4 md:px-8"
 			>
-				<div class="max-w-3xl py-28">
+				<div class="max-w-3xl py-8">
 					<p class="eyebrow reveal">AI Engineer · Builder</p>
 
 					<div class="reveal mt-5">
@@ -94,7 +94,7 @@ const steps = [
 
 			<!-- How I build — one-word process, anchored to the bottom -->
 			<div
-				class="relative z-10 mx-auto w-full max-w-[1120px] px-4 pb-12 md:px-8"
+				class="relative z-10 mx-auto w-full max-w-[1120px] px-4 pb-10 md:px-8"
 			>
 				<p class="eyebrow mb-4">How I build</p>
 				<div
@@ -105,7 +105,7 @@ const steps = [
 						steps.map((s, i) => (
 							<div
 								data-step={i}
-								class="group/step relative bg-background px-5 py-6 transition-colors hover:bg-surface data-[active]:bg-surface"
+								class="group/step relative bg-background px-5 py-5 transition-colors hover:bg-surface data-[active]:bg-surface"
 							>
 								<span class="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-500 group-hover/step:scale-x-100 group-data-[active]/step:scale-x-100" />
 								<div class="font-mono text-[12px] text-subtle transition-colors group-hover/step:text-brand-2 group-data-[active]/step:text-brand-2">
@@ -114,7 +114,7 @@ const steps = [
 								<div class="mt-1.5 font-mono text-2xl font-semibold tracking-tight transition-colors group-hover/step:text-brand-2 group-data-[active]/step:text-brand-2 md:text-3xl">
 									{s.word}
 								</div>
-								<p class="mt-2 h-9 text-[12.5px] leading-snug text-muted-foreground opacity-0 transition-opacity duration-500 group-hover/step:opacity-100 group-data-[active]/step:opacity-100">
+								<p class="mt-2 h-8 text-[12.5px] leading-snug text-muted-foreground opacity-0 transition-opacity duration-500 group-hover/step:opacity-100 group-data-[active]/step:opacity-100">
 									{s.desc}
 								</p>
 							</div>

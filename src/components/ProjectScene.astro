@@ -66,7 +66,6 @@ const chartBars = [58, 82, 44, 92, 66, 74, 52];
 		<!-- Visual (pins on desktop) -->
 		<div class:list={["visual-col", reversed ? "lg:order-1" : "lg:order-2"]}>
 			<div class="visual-sticky" data-tilt>
-				<span class="watermark" aria-hidden="true">{num}</span>
 				<div class="browser" data-tilt-inner>
 					<div class="browser-bar">
 						<span class="tl"></span>
@@ -196,7 +195,7 @@ const chartBars = [58, 82, 44, 92, 66, 74, 52];
 <style>
 	.scene {
 		position: relative;
-		padding-block: clamp(3rem, 8vh, 6rem);
+		padding-block: clamp(4.5rem, 13vh, 9rem);
 	}
 	.scene > div:nth-child(2) {
 		position: relative;
@@ -236,19 +235,6 @@ const chartBars = [58, 82, 44, 92, 66, 74, 52];
 			top: 50%;
 			transform: translateY(-50%);
 		}
-	}
-	.watermark {
-		position: absolute;
-		top: -2.6rem;
-		left: -0.6rem;
-		z-index: 0;
-		font-family: "Geist Mono", ui-monospace, monospace;
-		font-weight: 700;
-		font-size: clamp(5rem, 13vw, 10rem);
-		line-height: 1;
-		color: hsl(var(--accent) / 0.12);
-		pointer-events: none;
-		user-select: none;
 	}
 	.browser {
 		position: relative;
