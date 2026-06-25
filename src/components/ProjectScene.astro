@@ -43,6 +43,15 @@ const pins = [
 	{ top: "32%", left: "64%", d: "1.1s" },
 	{ top: "70%", left: "78%", d: "1.7s" },
 ];
+const portalSparks = [
+	{ top: "22%", left: "28%", d: "0s" },
+	{ top: "30%", left: "70%", d: "0.5s" },
+	{ top: "66%", left: "30%", d: "0.9s" },
+	{ top: "70%", left: "68%", d: "1.3s" },
+	{ top: "46%", left: "16%", d: "1.7s" },
+	{ top: "52%", left: "84%", d: "0.3s" },
+];
+const chartBars = [58, 82, 44, 92, 66, 74, 52];
 ---
 
 <section
@@ -96,6 +105,23 @@ const pins = [
 											))}
 										</>
 									)}
+									{mock === "portal" && (
+										<>
+											<div class="portal-core" />
+											{portalSparks.map((p) => (
+												<span
+													class="spark"
+													style={`top:${p.top};left:${p.left};animation-delay:${p.d}`}
+												/>
+											))}
+										</>
+									)}
+									{mock === "chart" &&
+										chartBars.map((hgt, i) => (
+											<i
+												style={`height:${hgt}%;--d:${(i * 0.12).toFixed(2)}s`}
+											/>
+										))}
 									<span class="mock-tag">{initial}</span>
 								</div>
 							)
@@ -429,6 +455,115 @@ const pins = [
 		}
 	}
 
+	/* portal: a glowing portal with twinkling sparks */
+	.mock[data-mock="portal"] {
+		display: grid;
+		place-items: center;
+	}
+	.mock[data-mock="portal"] .portal-core {
+		position: relative;
+		width: 26%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: radial-gradient(
+			circle at 50% 38%,
+			hsl(0 0% 100% / 0.85),
+			hsl(var(--accent)) 52%,
+			hsl(var(--accent) / 0.3)
+		);
+		box-shadow: 0 0 50px hsl(var(--accent) / 0.7);
+		animation: pcore 3s ease-in-out infinite;
+	}
+	@keyframes pcore {
+		0%,
+		100% {
+			transform: scale(0.9);
+		}
+		50% {
+			transform: scale(1.08);
+		}
+	}
+	.mock[data-mock="portal"] .portal-core::before,
+	.mock[data-mock="portal"] .portal-core::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: 50%;
+		border: 2px solid hsl(var(--accent) / 0.55);
+		animation: ping3 3s ease-out infinite;
+	}
+	.mock[data-mock="portal"] .portal-core::after {
+		animation-delay: 1.5s;
+	}
+	@keyframes ping3 {
+		0% {
+			transform: scale(1);
+			opacity: 0.7;
+		}
+		100% {
+			transform: scale(3);
+			opacity: 0;
+		}
+	}
+	.mock[data-mock="portal"] .spark {
+		position: absolute;
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: hsl(var(--accent));
+		box-shadow: 0 0 8px hsl(var(--accent));
+		animation: twinkle 2.4s ease-in-out infinite;
+	}
+	@keyframes twinkle {
+		0%,
+		100% {
+			opacity: 0.2;
+			transform: scale(0.6);
+		}
+		50% {
+			opacity: 1;
+			transform: scale(1.1);
+		}
+	}
+
+	/* chart: animated data bars */
+	.mock[data-mock="chart"] {
+		display: flex;
+		align-items: flex-end;
+		gap: 9px;
+		padding: 16px 18px;
+		background-image: repeating-linear-gradient(
+			to top,
+			transparent,
+			transparent calc(25% - 1px),
+			hsl(var(--accent) / 0.08) calc(25% - 1px),
+			hsl(var(--accent) / 0.08) 25%
+		);
+	}
+	.mock[data-mock="chart"] i {
+		flex: 1;
+		border-radius: 4px 4px 0 0;
+		background: linear-gradient(
+			to top,
+			hsl(var(--accent)),
+			hsl(var(--accent) / 0.4)
+		);
+		transform-origin: bottom;
+		animation: cgrow 2.6s ease-in-out infinite;
+		animation-delay: var(--d, 0s);
+	}
+	@keyframes cgrow {
+		0%,
+		100% {
+			transform: scaleY(0.82);
+			opacity: 0.72;
+		}
+		50% {
+			transform: scaleY(1);
+			opacity: 1;
+		}
+	}
+
 	/* ---- Content ---- */
 	.content-col {
 		display: flex;
@@ -608,7 +743,11 @@ const pins = [
 		}
 		.browser,
 		.mock i,
-		.mock .pin::after {
+		.mock .pin::after,
+		.mock .portal-core,
+		.mock .portal-core::before,
+		.mock .portal-core::after,
+		.mock .spark {
 			animation: none !important;
 			transition: none;
 		}
