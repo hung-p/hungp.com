@@ -15,12 +15,30 @@ export function Dock() {
     const mouseX = useMotionValue(Infinity);
     const [visible, setVisible] = useState(false);
 
-    // Hidden at the top of the page; slides in once the user scrolls down a bit.
+    // Hidden at the top; slides in after a little scroll; hides again at the footer.
     useEffect(() => {
-        const onScroll = () => setVisible(window.scrollY > 80);
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
+        let footerInView = false;
+        const update = () =>
+            setVisible(window.scrollY > 80 && !footerInView);
+        update();
+        window.addEventListener("scroll", update, { passive: true });
+
+        const footer = document.querySelector("footer");
+        let io: IntersectionObserver | undefined;
+        if (footer && "IntersectionObserver" in window) {
+            io = new IntersectionObserver(
+                (entries) => {
+                    footerInView = entries[0].isIntersecting;
+                    update();
+                },
+                { threshold: 0 },
+            );
+            io.observe(footer);
+        }
+        return () => {
+            window.removeEventListener("scroll", update);
+            io?.disconnect();
+        };
     }, []);
 
     return (

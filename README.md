@@ -35,8 +35,8 @@ bun install
 # Start development server
 bun run dev
 ```
+<!-- Run astro preferences disable devToolbar in your terminal to disable the toolbar. -->
 
 ## 📄 License
+(c) 2026 Hung Pham. All rights reserved.
 
-You are free to share and adapt this code for your own personal websites, as long as you provide **attribution**.
-*Link back to this repo or my site if you use my design or code structures.*
