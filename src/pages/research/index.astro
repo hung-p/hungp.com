@@ -6,12 +6,10 @@ import { getCollection } from "astro:content";
 import { blogCategories } from "../../types";
 import { Brain, Rocket, Compass } from "lucide-react";
 
-// Get all blog posts sorted by date
 const posts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Group posts by category
 const aiCvPosts = posts.filter((p) => p.data.category === "ai-cv-lab");
 const studioPosts = posts.filter((p) => p.data.category === "studio-notes");
 const philosophyPosts = posts.filter(
@@ -25,168 +23,136 @@ const categoryIcons = {
 	"philosophy-culture": Compass,
 };
 
-const categoryColors = {
-	"ai-cv-lab": "blue",
-	"studio-notes": "emerald",
-	"philosophy-culture": "purple",
-};
+const sections = [
+	{
+		id: "ai-cv-lab",
+		icon: Brain,
+		color: "text-sky-400",
+		title: "AI/CV Lab",
+		blurb: "Technical deep dives into generative models, computer vision, and AI ethics.",
+		posts: aiCvPosts,
+		empty: "Research posts coming soon…",
+	},
+	{
+		id: "studio-notes",
+		icon: Rocket,
+		color: "text-live",
+		title: "Building Notes",
+		blurb: "Lessons and reflections from building products.",
+		posts: studioPosts,
+		empty: "Notes coming soon…",
+	},
+	{
+		id: "philosophy-culture",
+		icon: Compass,
+		color: "text-brand-2",
+		title: "Philosophy & Culture",
+		blurb: "Broader thoughts on life, creativity, and the human experience.",
+		posts: philosophyPosts,
+		empty: "Philosophy posts coming soon…",
+	},
+];
 ---
 
 <BaseLayout
 	title="Research & Thoughts | Hung Pham"
 	description="Technical deep-dives, entrepreneurial reflections, and broader thoughts on life and creativity."
 >
-	<div class="space-y-16 md:space-y-24 pb-32">
-		<!-- Page Header -->
-		<section class="pt-8 md:pt-16">
-			<div class="max-w-3xl">
+	<div class="space-y-16 md:space-y-24">
+		<!-- Header -->
+		<section class="pt-12 md:pt-16">
+			<div class="reveal max-w-3xl">
+				<p class="eyebrow mb-5">Research &amp; Thoughts</p>
 				<h1
-					class="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
+					class="text-4xl font-semibold leading-[1.1] tracking-tighter md:text-6xl"
 				>
-					Research & Thoughts
+					Deep-dives from the lab, notes on building, and the occasional
+					philosophical detour.
 				</h1>
-				<p class="text-lg md:text-xl text-muted-foreground leading-relaxed">
-					Bridging the academic and entrepreneurial worlds. Technical
-					deep-dives from the AI/CV lab, reflections on building, and
-					broader philosophical explorations.
+				<p class="mt-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
+					Bridging the academic and entrepreneurial worlds — technical work
+					from the AI/CV lab, reflections on building, and broader
+					explorations.
 				</p>
 			</div>
-		</section>
 
-		<!-- Category Filter Pills -->
-		<section class="flex flex-wrap gap-3">
-			<a
-				href="#all"
-				class="px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-colors"
-			>
-				All Posts
-			</a>
-			{
-				blogCategories.map((cat) => {
-					const Icon = categoryIcons[cat.slug as keyof typeof categoryIcons];
-					return (
-						<a
-							href={`#${cat.slug}`}
-							class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 text-secondary-foreground text-sm font-medium hover:bg-secondary transition-colors"
-						>
-							<Icon className="w-4 h-4" />
-							{cat.title}
-						</a>
-					);
-				})
-			}
-		</section>
-
-		<!-- AI/CV Lab Section -->
-		<section id="ai-cv-lab">
-			<div class="flex items-center gap-3 mb-6">
-				<div class="p-2 rounded-lg bg-blue-500/10 text-blue-500">
-					<Brain className="w-5 h-5" />
-				</div>
-				<div>
-					<h2 class="text-xl md:text-2xl font-bold">AI/CV Lab</h2>
-					<p class="text-muted-foreground text-sm">
-						Technical deep dives into generative models, computer
-						vision, and AI ethics.
-					</p>
-				</div>
+			<!-- Filter pills -->
+			<div class="reveal mt-8 flex flex-wrap gap-2.5">
+				<a
+					href="#all"
+					class="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-colors"
+				>
+					All Posts
+				</a>
+				{
+					blogCategories.map((cat) => {
+						const Icon = categoryIcons[cat.slug as keyof typeof categoryIcons];
+						return (
+							<a
+								href={`#${cat.slug}`}
+								class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/15 hover:text-foreground"
+							>
+								<Icon className="h-4 w-4" />
+								{cat.title}
+							</a>
+						);
+					})
+				}
 			</div>
-
-			{
-				aiCvPosts.length > 0 ? (
-					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{aiCvPosts.map((post) => (
-							<InsightCard post={post} />
-						))}
-					</div>
-				) : (
-					<div class="py-8 text-center text-muted-foreground border border-dashed border-white/10 rounded-xl">
-						<p>Research posts coming soon...</p>
-					</div>
-				)
-			}
 		</section>
 
-		<!-- Studio Notes Section -->
-		<section id="studio-notes">
-			<div class="flex items-center gap-3 mb-6">
-				<div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-500">
-					<Rocket className="w-5 h-5" />
-				</div>
-				<div>
-					<h2 class="text-xl md:text-2xl font-bold">
-						Studio Notes on Building
-					</h2>
-					<p class="text-muted-foreground text-sm">
-						Entrepreneurial reflections and lessons from the venture
-						studio.
-					</p>
-				</div>
-			</div>
-
-			{
-				studioPosts.length > 0 ? (
-					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{studioPosts.map((post) => (
-							<InsightCard post={post} />
-						))}
+		<!-- Category sections -->
+		{
+			sections.map((section) => {
+				const Icon = section.icon;
+				return (
+				<section id={section.id}>
+					<div class="reveal mb-6 flex items-center gap-3.5">
+						<div class={`grid h-11 w-11 flex-none place-items-center rounded-xl border border-border bg-surface ${section.color}`}>
+							<Icon className="h-5 w-5" />
+						</div>
+						<div>
+							<h2 class="text-xl font-semibold tracking-tight md:text-2xl">
+								{section.title}
+							</h2>
+							<p class="text-sm text-muted-foreground">{section.blurb}</p>
+						</div>
 					</div>
-				) : (
-					<div class="py-8 text-center text-muted-foreground border border-dashed border-white/10 rounded-xl">
-						<p>Studio notes coming soon...</p>
-					</div>
-				)
-			}
-		</section>
 
-		<!-- Philosophy & Culture Section -->
-		<section id="philosophy-culture">
-			<div class="flex items-center gap-3 mb-6">
-				<div class="p-2 rounded-lg bg-purple-500/10 text-purple-500">
-					<Compass className="w-5 h-5" />
-				</div>
-				<div>
-					<h2 class="text-xl md:text-2xl font-bold">
-						Philosophy & Culture
-					</h2>
-					<p class="text-muted-foreground text-sm">
-						Broader thoughts on life, creativity, and the human
-						experience.
-					</p>
-				</div>
-			</div>
+					{section.posts.length > 0 ? (
+						<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+							{section.posts.map((post) => (
+								<div class="reveal">
+									<InsightCard post={post} />
+								</div>
+							))}
+						</div>
+					) : (
+						<div class="reveal rounded-2xl border border-dashed border-border bg-surface/50 py-10 text-center text-muted-foreground">
+							<p>{section.empty}</p>
+						</div>
+					)}
+				</section>
+			);
+			})
+		}
 
-			{
-				philosophyPosts.length > 0 ? (
-					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{philosophyPosts.map((post) => (
-							<InsightCard post={post} />
-						))}
-					</div>
-				) : (
-					<div class="py-8 text-center text-muted-foreground border border-dashed border-white/10 rounded-xl">
-						<p>Philosophy posts coming soon...</p>
-					</div>
-				)
-			}
-		</section>
-
-		<!-- Uncategorized / All Posts -->
 		{
 			uncategorizedPosts.length > 0 && (
 				<section id="all">
-					<div class="mb-6">
-						<h2 class="text-xl md:text-2xl font-bold">
+					<div class="reveal mb-6">
+						<h2 class="text-xl font-semibold tracking-tight md:text-2xl">
 							All Posts
 						</h2>
-						<p class="text-muted-foreground text-sm">
+						<p class="text-sm text-muted-foreground">
 							Browse all published content.
 						</p>
 					</div>
-
-					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 						{uncategorizedPosts.map((post) => (
-							<InsightCard post={post} />
+							<div class="reveal">
+								<InsightCard post={post} />
+							</div>
 						))}
 					</div>
 				</section>

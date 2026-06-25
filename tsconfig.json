@@ -8,12 +8,14 @@
     "dist"
   ],
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "strictNullChecks": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     }
   }

@@ -1,0 +1,132 @@
+---
+import { siteConfig } from "../site.config";
+
+const year = new Date().getFullYear();
+
+const studioLinks = [
+	{ label: "AIGallery", href: "https://aigallery.app" },
+	{ label: "VeganForReal", href: "https://veganforreal.com" },
+	{ label: "VocalLoom", href: "https://vocalloom.com" },
+	{ label: "vnm.app", href: "https://vnm.app" },
+];
+---
+
+<footer class="relative mt-16">
+	<!-- Soft fading hairline (replaces a hard border for a uniform edge) -->
+	<div
+		class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+	>
+	</div>
+	<div class="mx-auto w-full max-w-[1120px] px-4 pb-28 pt-14 md:px-8">
+		<div class="flex flex-wrap justify-between gap-10">
+			<!-- Brand -->
+			<div class="max-w-xs">
+				<a href="/" class="group inline-flex items-center gap-3">
+					<span
+						class="grid h-8 w-8 place-items-center rounded-[10px] bg-foreground font-mono text-[13px] font-semibold text-background transition-transform duration-300 group-hover:-rotate-6"
+						>hp</span
+					>
+					<span class="font-semibold">Hung Pham</span>
+				</a>
+				<p class="mt-4 text-sm leading-relaxed text-muted-foreground">
+					A personal operating system — connecting projects, ideas, and
+					the occasional experiment.
+				</p>
+			</div>
+
+			<!-- Link columns -->
+			<div class="flex flex-wrap gap-x-16 gap-y-8">
+				<div>
+					<h2
+						class="mb-4 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle"
+					>
+						Navigate
+					</h2>
+					<ul class="space-y-2 text-sm">
+						<li><a class="footer-link" href="/">Home</a></li>
+						<li><a class="footer-link" href="/projects">Projects</a></li>
+						<li><a class="footer-link" href="/about">About</a></li>
+						<li><a class="footer-link" href="/research">Research</a></li>
+					</ul>
+				</div>
+				<div>
+					<h2
+						class="mb-4 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle"
+					>
+						Building
+					</h2>
+					<ul class="space-y-2 text-sm">
+						{
+							studioLinks.map((l) => (
+								<li>
+									<a
+										class="footer-link"
+										href={l.href}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{l.label}
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+				<div>
+					<h2
+						class="mb-4 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle"
+					>
+						Connect
+					</h2>
+					<ul class="space-y-2 text-sm">
+						<li>
+							<a
+								class="footer-link"
+								href={siteConfig.github}
+								target="_blank"
+								rel="noopener noreferrer">GitHub</a
+							>
+						</li>
+						<li>
+							<a
+								class="footer-link"
+								href={siteConfig.linkedin}
+								target="_blank"
+								rel="noopener noreferrer">LinkedIn</a
+							>
+						</li>
+						<li>
+							<a
+								class="footer-link"
+								href={siteConfig.twitter}
+								target="_blank"
+								rel="noopener noreferrer">Twitter / X</a
+							>
+						</li>
+						<li>
+							<a class="footer-link" href={`mailto:${siteConfig.email}`}
+								>Email</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6 text-[13px] text-subtle"
+		>
+			<span>© {year} Hung Pham. All rights reserved.</span>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer-link {
+		color: hsl(var(--muted-foreground));
+		transition: color 0.2s ease;
+	}
+	.footer-link:hover {
+		color: hsl(var(--brand-2));
+	}
+</style>

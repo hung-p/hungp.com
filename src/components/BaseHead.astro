@@ -36,15 +36,7 @@ const personSchema = {
 	"name": siteConfig.author,
 	"url": Astro.site?.toString(),
 	"image": fullImageUrl,
-	"jobTitle": "AI Engineer & Venture Builder",
-	"worksFor": {
-		"@type": "Organization",
-		"name": "Venture Studio"
-	},
-	"alumniOf": {
-		"@type": "CollegeOrUniversity",
-		"name": siteConfig.university
-	},
+	"jobTitle": "AI Engineer & Builder",
 	"sameAs": [
 		siteConfig.github,
 		siteConfig.linkedin,
@@ -76,6 +68,14 @@ const websiteSchema = {
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
 
+<!-- Fonts: Geist Mono for technical labels (Geist Sans is self-hosted via @fontsource) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap"
+	rel="stylesheet"
+/>
+
 <!-- Sitemap & RSS -->
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
@@ -103,7 +103,7 @@ const websiteSchema = {
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta name="author" content={siteConfig.author} />
-<meta name="keywords" content="AI Engineer, Venture Builder, Machine Learning, Computer Vision, NLP, San Jose, Silicon Valley, Startup, AIGallery, Hung Pham" />
+<meta name="keywords" content="AI Engineer, Builder, Useful products, Software Engineer, Machine Learning, Computer Vision, Personal projects, AIGallery, Hung Pham" />
 
 <!-- Language -->
 <meta property="og:locale" content={siteConfig.lang.replace('-', '_')} />

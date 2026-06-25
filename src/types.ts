@@ -26,8 +26,8 @@ export const blogCategories: BlogCategory[] = [
     },
     {
         slug: 'studio-notes',
-        title: 'Studio Notes',
-        description: 'Entrepreneurial reflections on building products and ventures.',
+        title: 'Building Notes',
+        description: 'Reflections and lessons from building products.',
     },
     {
         slug: 'philosophy-culture',

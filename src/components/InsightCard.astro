@@ -1,20 +1,27 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
 	post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
+
+const categoryLabels: Record<string, string> = {
+	"ai-cv-lab": "AI/CV Lab",
+	"studio-notes": "Building Notes",
+	"philosophy-culture": "Philosophy & Culture",
+};
 ---
 
 <a
 	href={`/research/${post.slug}`}
-	class="group block p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/60"
+	class="group flex flex-col rounded-2xl border border-border bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/15 hover:bg-surface-2"
 >
-	<div class="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-		<Calendar className="w-3.5 h-3.5" />
+	<div
+		class="mb-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.06em] text-subtle"
+	>
 		<time datetime={post.data.pubDate.toISOString()}>
 			{
 				post.data.pubDate.toLocaleDateString("en-US", {
@@ -27,26 +34,29 @@ const { post } = Astro.props;
 		{
 			post.data.category && (
 				<>
-					<span class="text-muted-foreground/50">•</span>
-					<span class="text-primary/80">{post.data.category}</span>
+					<span class="text-border">·</span>
+					<span class="text-brand-2">
+						{categoryLabels[post.data.category] || post.data.category}
+					</span>
 				</>
 			)
 		}
 	</div>
+
 	<h3
-		class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2"
+		class="mb-2 line-clamp-2 text-[17px] font-semibold leading-snug tracking-tight transition-colors group-hover:text-brand-2"
 	>
 		{post.data.title}
 	</h3>
-	<p class="text-sm text-muted-foreground line-clamp-2 mb-3">
+	<p class="mb-4 line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">
 		{post.data.description}
 	</p>
 	<span
-		class="inline-flex items-center gap-1.5 text-sm text-primary/80 group-hover:text-primary transition-colors"
+		class="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-brand-2"
 	>
 		Read more
 		<ArrowRight
-			className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"
+			className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
 		/>
 	</span>
 </a>

@@ -37,9 +37,9 @@ export const tier1Projects: Project[] = [
 		slug: "aigallery",
 		title: "AIGallery",
 		description: "A generative AI platform that democratizes visual creation by providing frictionless, free-to-use image synthesis.",
-		longDescription: "AIGallery is a generative AI platform that democratizes visual creation by providing frictionless, free-to-use image synthesis. By integrating a vast ecosystem of curated prompts and creative ideas, it serves as both a generation engine and a strategic hub for visual ideation.\n\nCurrently supporting an organic community of over 65,000 monthly active users, AIGallery has become a go-to platform for artists, designers, and creators looking to explore the possibilities of AI-generated art.",
+		longDescription: "AIGallery is a generative AI platform that democratizes visual creation by providing frictionless, free-to-use image synthesis. By integrating a vast ecosystem of curated prompts and creative ideas, it serves as both a generation engine and a strategic hub for visual ideation.\n\nOver time it has grown into a go-to platform for artists, designers, and creators exploring the possibilities of AI-generated art, supported by an organic and growing community.",
 		href: "https://aigallery.app",
-		stats: "65k+ MAU",
+		stats: "Live & growing",
 		tags: ["Generative AI", "Computer Vision", "Creative Tools"],
 		featured: true,
 		status: "active",
@@ -71,37 +71,16 @@ export const tier1Projects: Project[] = [
 	},
 ];
 
-// Tier 2: Content & IP Projects
-export const tier2Projects: Project[] = [
-	{
-		slug: "vnm-app",
-		title: "vnm.app",
-		description: "A digital sanctuary for Vietnamese culture and history.",
-		longDescription: "vnm.app is a digital sanctuary for Vietnamese culture and history. Connecting heritage with modern technology through interactive storytelling.\n\nThis project is a personal passion—preserving and sharing the rich cultural tapestry of Vietnam with the world through immersive digital experiences.",
-		href: "https://vnm.app",
-		tags: ["Culture", "History", "Vietnamese"],
-		status: "development",
-		year: 2024,
-	},
-	{
-		slug: "the-code-of-silence",
-		title: "The Code of Silence",
-		description: "A science fiction narrative exploring the deep intersections of artificial intelligence and human consciousness.",
-		longDescription: "The Code of Silence is a science fiction narrative exploring the deep intersections of artificial intelligence and human consciousness. This project investigates the psychological boundaries of a hyper-connected future, questioning how the core of human identity survives in an era dominated by algorithmic logic and total digital transparency.\n\nMore than just a story—it's an exploration of what it means to be human in an age of AI.",
-		href: "#",
-		tags: ["Sci-Fi", "Artificial Intelligence", "Intellectual Property"],
-		status: "concept",
-		year: 2025,
-	},
-];
+// Tier 2: Content & IP Projects — retired from the studio view
+export const tier2Projects: Project[] = [];
 
 // Tier 3: Labs & Incubator (Consolidated)
 export const tier3Projects: Project[] = [
 	{
 		slug: "hungp-com",
 		title: "HungP.com",
-		description: "The central hub and personal operating system for the Venture Studio.",
-		longDescription: "HungP.com serves as the central hub and personal operating system for the Venture Studio. Built with Astro and modern web technologies, it's both a portfolio and a command center for all ventures.\n\nThis site you're on right now—constantly evolving as the studio grows.",
+		description: "The central hub and personal operating system for everything I build.",
+		longDescription: "HungP.com is the central hub and personal operating system for everything I build. Built with Astro and modern web technologies, it's part portfolio, part command center for all my projects.\n\nThis is the site you're on right now — constantly evolving as the projects grow.",
 		href: "https://github.com/hung-p/hungp.com",
 		tags: ["Astro", "Portfolio"],
 		status: "active",
@@ -121,18 +100,13 @@ export const tier3Projects: Project[] = [
 
 export const allTiers: ProjectTier[] = [
 	{
-		title: "Active Engines",
-		description: "Projects in active development",
+		title: "In active development",
+		description: "The projects I'm putting the most into right now",
 		projects: tier1Projects,
 	},
 	{
-		title: "Content & IP",
-		description: "Cultural assets and intellectual property",
-		projects: tier2Projects,
-	},
-	{
-		title: "Incubator",
-		description: "Research tools and niche experiments",
+		title: "Experiments",
+		description: "Smaller ideas and early tools",
 		projects: tier3Projects,
 	},
 ];

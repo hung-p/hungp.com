@@ -1,55 +1,64 @@
 ---
 import type { Project } from "../data/projects";
-import { ArrowUpRight, TrendingUp } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 interface Props {
 	project: Project;
 }
 
 const { project } = Astro.props;
+const isActive = project.status === "active";
 ---
 
 <a
 	href={`/projects/${project.slug}`}
-	class="group relative block overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-card to-muted/20 p-6 md:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1"
+	data-glow
+	class="group ring-gradient relative block overflow-hidden rounded-3xl border border-border bg-surface p-7 transition-all duration-500 hover:-translate-y-1 hover:border-transparent hover:shadow-2xl md:p-8"
 >
-	<!-- Glow effect on hover -->
-	<div
-		class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-	>
-	</div>
+	<!-- Cursor-follow glow -->
+	<div class="engine-glow" aria-hidden="true"></div>
 
 	<div class="relative z-10">
 		<!-- Header -->
-		<div class="flex items-start justify-between mb-4">
-			<div>
-				<div class="flex items-center gap-3 mb-2">
-					<h3
-						class="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-primary transition-colors"
-					>
-						{project.title}
-					</h3>
-					{
-						project.stats && (
-							<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-medium border border-emerald-500/20">
-								<TrendingUp className="w-3.5 h-3.5" />
-								{project.stats}
-							</span>
-						)
-					}
-				</div>
+		<div class="mb-4 flex items-start justify-between gap-4">
+			<div class="flex flex-wrap items-center gap-3">
+				<h3
+					class="text-2xl font-semibold tracking-tight transition-colors group-hover:text-brand-2 md:text-[1.7rem]"
+				>
+					{project.title}
+				</h3>
+				{
+					project.stats && (
+						<span
+							class:list={[
+								"inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[13px] font-medium",
+								isActive
+									? "border-live/25 bg-live/10 text-live"
+									: "border-brand/25 bg-brand/10 text-brand-2",
+							]}
+						>
+							{isActive && (
+								<span class="relative flex h-1.5 w-1.5">
+									<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-75" />
+									<span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" />
+								</span>
+							)}
+							{project.stats}
+						</span>
+					)
+				}
 			</div>
 			<div
-				class="p-2 rounded-full bg-white/5 group-hover:bg-primary/10 transition-colors"
+				class="grid h-10 w-10 flex-none place-items-center rounded-full border border-border text-muted-foreground transition-all duration-500 group-hover:rotate-45 group-hover:border-transparent group-hover:bg-brand group-hover:text-brand-foreground"
 			>
-				<ArrowUpRight
-					className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors"
-				/>
+				<ArrowUpRight className="h-[18px] w-[18px]" />
 			</div>
 		</div>
 
 		<!-- Description -->
-		<p class="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
+		<p
+			class="mb-6 max-w-2xl text-[15.5px] leading-relaxed text-muted-foreground"
+		>
 			{project.description}
 		</p>
 
@@ -57,22 +66,39 @@ const { project } = Astro.props;
 		<div class="flex flex-wrap gap-2">
 			{
 				project.tags.map((tag) => (
-					<span class="px-3 py-1 rounded-full bg-secondary/50 text-secondary-foreground text-sm font-medium border border-white/5">
+					<span class="rounded-lg border border-border bg-surface-2 px-2.5 py-1 font-mono text-[11.5px] text-muted-foreground">
 						{tag}
 					</span>
 				))
 			}
 		</div>
 	</div>
-
-	<!-- Active indicator -->
-	<div class="absolute top-4 right-4">
-		<span class="relative flex h-3 w-3">
-			<span
-				class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
-			></span>
-			<span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"
-			></span>
-		</span>
-	</div>
 </a>
+
+<style>
+	.engine-glow {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		transition: opacity 0.5s ease;
+		background: radial-gradient(
+			520px circle at var(--mx, 50%) var(--my, 0%),
+			hsl(var(--brand) / 0.13),
+			transparent 45%
+		);
+	}
+	.group:hover .engine-glow {
+		opacity: 1;
+	}
+</style>
+
+<script>
+	// Wire cursor-follow glow for all engine cards (runs once per page).
+	document.querySelectorAll<HTMLElement>("[data-glow]").forEach((card) => {
+		card.addEventListener("pointermove", (e) => {
+			const r = card.getBoundingClientRect();
+			card.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+			card.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+		});
+	});
+</script>

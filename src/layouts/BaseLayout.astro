@@ -1,5 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import { siteConfig } from "../site.config";
 import "../styles/global.css";
 
@@ -13,7 +15,7 @@ interface Props {
 }
 
 const {
-    title = `${siteConfig.title} | AI Engineer & Venture Builder`,
+    title = `${siteConfig.title} | AI Engineer & Builder`,
     description = siteConfig.description,
     image = "/og-image.png",
     type = "website",
@@ -25,34 +27,118 @@ const {
 <!doctype html>
 <html lang={siteConfig.lang} class="dark">
     <head>
-        <BaseHead 
-            title={title} 
-            description={description} 
-            image={image} 
+        <BaseHead
+            title={title}
+            description={description}
+            image={image}
             type={type}
             publishedTime={publishedTime}
             noindex={noindex}
         />
+        <!-- No-FOUC theme init: applies saved theme before first paint -->
+        <script is:inline>
+            (function () {
+                var el = document.documentElement;
+                el.classList.add("js");
+                try {
+                    if (localStorage.getItem("theme") === "light")
+                        el.classList.remove("dark");
+                    else el.classList.add("dark");
+                } catch (e) {
+                    el.classList.add("dark");
+                }
+            })();
+        </script>
     </head>
     <body
-        class="bg-background text-foreground antialiased min-h-screen font-sans selection:bg-purple-500/30 selection:text-purple-200 overflow-x-hidden"
+        class="min-h-screen overflow-x-hidden bg-background font-sans text-foreground antialiased"
     >
-        <!-- Background Gradients -->
-        <div
-            class="fixed inset-0 z-[-1] h-full w-full bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] opacity-20 pointer-events-none"
-        >
-        </div>
-        <div
-            class="fixed top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]"
-        >
-        </div>
+        <!-- Ambient background -->
+        <div class="bg-grid" aria-hidden="true"></div>
+        <div class="bg-glow" aria-hidden="true"></div>
+        <div class="bg-grain" aria-hidden="true"></div>
+
+        <ThemeToggle />
 
         <main class="relative flex min-h-screen flex-col">
             <div
-                class="flex-1 w-full mx-auto max-w-screen-xl px-4 md:px-8 py-8 md:py-16"
+                class="w-full flex-1 mx-auto max-w-[1120px] px-4 py-8 md:px-8 md:py-14"
             >
                 <slot />
             </div>
+            <SiteFooter />
         </main>
+
+        <!-- Micro-interactions: scroll reveal + stat count-up -->
+        <script is:inline>
+            (function () {
+                var reduce = window.matchMedia(
+                    "(prefers-reduced-motion: reduce)",
+                ).matches;
+                var hasIO = "IntersectionObserver" in window;
+                var reveals = document.querySelectorAll(".reveal");
+
+                if (reduce || !hasIO) {
+                    reveals.forEach(function (el) {
+                        el.classList.add("in");
+                    });
+                } else {
+                    var io = new IntersectionObserver(
+                        function (entries) {
+                            entries.forEach(function (en) {
+                                if (en.isIntersecting) {
+                                    en.target.classList.add("in");
+                                    io.unobserve(en.target);
+                                }
+                            });
+                        },
+                        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+                    );
+                    reveals.forEach(function (el) {
+                        io.observe(el);
+                    });
+                }
+
+                function countUp(el) {
+                    var target = parseFloat(el.getAttribute("data-countup")) || 0;
+                    var suffix = el.getAttribute("data-suffix") || "";
+                    var dur = 1100,
+                        start = null;
+                    function step(ts) {
+                        if (!start) start = ts;
+                        var p = Math.min((ts - start) / dur, 1);
+                        var e = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.round(target * e) + suffix;
+                        if (p < 1) requestAnimationFrame(step);
+                    }
+                    requestAnimationFrame(step);
+                }
+                var nums = document.querySelectorAll("[data-countup]");
+                if (nums.length) {
+                    if (reduce || !hasIO) {
+                        nums.forEach(function (el) {
+                            el.textContent =
+                                el.getAttribute("data-countup") +
+                                (el.getAttribute("data-suffix") || "");
+                        });
+                    } else {
+                        var nio = new IntersectionObserver(
+                            function (entries) {
+                                entries.forEach(function (en) {
+                                    if (en.isIntersecting) {
+                                        countUp(en.target);
+                                        nio.unobserve(en.target);
+                                    }
+                                });
+                            },
+                            { threshold: 0.6 },
+                        );
+                        nums.forEach(function (el) {
+                            nio.observe(el);
+                        });
+                    }
+                }
+            })();
+        </script>
     </body>
 </html>

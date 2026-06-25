@@ -38,7 +38,5 @@ bun run dev
 
 ## 📄 License
 
-This project is open source and available under the **CC BY 4.0** license.
-
 You are free to share and adapt this code for your own personal websites, as long as you provide **attribution**.
 *Link back to this repo or my site if you use my design or code structures.*

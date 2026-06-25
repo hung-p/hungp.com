@@ -4,144 +4,133 @@ import { Dock } from "../components/Dock";
 import { siteConfig } from "../site.config";
 import { techStack } from "../data/projects";
 import {
-  MapPin,
   Mail,
   Github,
   Linkedin,
   Twitter,
   ArrowRight,
-  Briefcase,
-  GraduationCap,
-  Code,
+  Hammer,
+  Layers,
+  RefreshCw,
+  Globe,
   Sparkles,
 } from "lucide-react";
+
+const stackGroups = [
+  { key: "frontend", label: "Frontend", dot: "bg-sky-400", items: techStack.frontend },
+  { key: "backend", label: "Backend", dot: "bg-live", items: techStack.backend },
+  { key: "ai_ml", label: "AI / ML", dot: "bg-brand", items: techStack.ai_ml },
+  { key: "tools", label: "Tools", dot: "bg-amber-400", items: techStack.tools },
+];
 ---
 
 <BaseLayout
-  title="About Hung Pham | AI Engineer & Venture Builder"
-  description="Learn about Hung Pham - an AI Engineer from Vietnam building at the intersection of AI research and entrepreneurship in Silicon Valley. MS AI candidate at San Jose State University."
+  title="About Hung Pham | Engineer & Builder"
+  description="Hung Pham builds useful products that people actually use — a few personal projects in active development."
 >
-  <div class="space-y-16 md:space-y-24 pb-32">
-    <!-- Page Header -->
-    <section class="pt-8 md:pt-16">
-      <div class="grid lg:grid-cols-3 gap-12">
-        <!-- Bio Section -->
-        <div class="lg:col-span-2 space-y-8">
-          <div>
+  <div class="space-y-16 md:space-y-24">
+    <!-- Intro -->
+    <section class="pt-12 md:pt-16">
+      <div class="grid gap-12 lg:grid-cols-3">
+        <div class="space-y-7 lg:col-span-2">
+          <div class="reveal">
+            <p class="eyebrow mb-5">About</p>
             <h1
-              class="text-4xl md:text-6xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
+              class="text-4xl font-semibold leading-[1.1] tracking-tighter md:text-6xl"
             >
-              About
+              On building useful things.
             </h1>
-            <p
-              class="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6"
-            >
-              AI Engineer & Venture Builder. Turning research into products that actually matter.
-            </p>
           </div>
 
-          <!-- The Story -->
-          <div class="prose prose-invert max-w-none space-y-4">
-            <p class="text-muted-foreground leading-relaxed">
-              My journey began in <span class="text-foreground">Vietnam</span>,
-              where I first discovered the power of code to transform ideas into
-              reality. I graduated <span class="text-foreground">Summa Cum Laude in Computer Science</span>, then spent years as a <span
-                class="text-foreground">Mobile Lead at Kootoro Vietnam</span
-              >, building mobile applications that reached millions of users.
+          <div class="reveal space-y-5">
+            <p class="text-base leading-relaxed text-muted-foreground md:text-[17px]">
+              I build products — and what I care about most is whether people
+              <span class="font-medium text-foreground">actually use them</span>.
+              Not demos, not slides that look good in a pitch. Things that earn a
+              place in someone's day.
             </p>
-
-            <p class="text-muted-foreground leading-relaxed">
-              Today, I'm pursuing my <span class="text-foreground"
-                >Master's in AI at San Jose State University</span
-              >. My research spans recommender systems, NLP, and reinforcement learning—always with an eye toward ethical implementation and solving real-world problems.
+            <p class="text-base leading-relaxed text-muted-foreground md:text-[17px]">
+              Right now that's a <span class="font-medium text-brand-2"
+                >handful of personal projects</span
+              >, all in active development. Some are live and growing; others are
+              early experiments still finding their shape — but each one is aimed
+              at a real problem worth solving.
             </p>
-
-            <p class="text-muted-foreground leading-relaxed">
-              Beyond academia, I run a <span class="text-foreground"
-                >venture studio</span
-              > that bridges technology and culture. From AIGallery serving 60k+ monthly
-              users to creative projects exploring Vietnamese heritage, I believe
-              the best technology serves human creativity and connection.
-            </p>
-
-            <p class="text-muted-foreground leading-relaxed">
-              I'm particularly interested in the intersection of <span
-                class="text-foreground">AI and entrepreneurship</span
-              >—how emerging technologies can be shaped into products that
-              genuinely help people, rather than just demonstrating technical
-              capability.
+            <p class="text-base leading-relaxed text-muted-foreground md:text-[17px]">
+              I'm an engineer by training, and <span
+                class="font-medium text-foreground">AI is one of the tools</span
+              > I reach for — but it's never the point. The point is the product:
+              useful, well-made, and worth coming back to. I care about shipping,
+              listening, and making the next version better.
             </p>
           </div>
         </div>
 
-        <!-- Quick Info Card -->
-        <div class="space-y-6">
-          <div
-            class="p-6 rounded-2xl border border-white/5 bg-card/30 backdrop-blur-sm"
-          >
-            <h3 class="font-semibold mb-4 text-lg">Quick Info</h3>
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                <span class="text-muted-foreground">{siteConfig.location}</span>
+        <!-- Side cards -->
+        <div class="space-y-5">
+          <div class="reveal rounded-2xl border border-border bg-surface p-6">
+            <h2 class="mb-4 flex items-center justify-between text-lg font-semibold">
+              At a glance
+              <span class="font-mono text-[11px] text-subtle">/ how I work</span>
+            </h2>
+            <div class="space-y-3.5">
+              <div class="flex items-center gap-3 text-muted-foreground">
+                <Hammer className="h-4 w-4 flex-none text-subtle" />
+                <span>Builds useful products</span>
               </div>
-              <div class="flex items-center gap-3">
-                <GraduationCap className="w-4 h-4 text-muted-foreground" />
-                <span class="text-muted-foreground">MS AI @ San Jose State</span
-                >
+              <div class="flex items-center gap-3 text-muted-foreground">
+                <Layers className="h-4 w-4 flex-none text-subtle" />
+                <span>A few personal projects, in development</span>
               </div>
-              <div class="flex items-center gap-3">
-                <Briefcase className="w-4 h-4 text-muted-foreground" />
-                <span class="text-muted-foreground">Venture Studio Founder</span
-                >
+              <div class="flex items-center gap-3 text-muted-foreground">
+                <RefreshCw className="h-4 w-4 flex-none text-subtle" />
+                <span>Ships, listens, iterates</span>
               </div>
-              <div class="flex items-center gap-3">
-                <Code className="w-4 h-4 text-muted-foreground" />
-                <span class="text-muted-foreground"
-                  >Ex-Mobile Lead @ Kootoro</span
-                >
+              <div class="flex items-center gap-3 text-muted-foreground">
+                <Globe className="h-4 w-4 flex-none text-subtle" />
+                <span>Based in {siteConfig.location}</span>
               </div>
             </div>
           </div>
 
-          <!-- Social Links -->
-          <div
-            class="p-6 rounded-2xl border border-white/5 bg-card/30 backdrop-blur-sm"
-          >
-            <h3 class="font-semibold mb-4 text-lg">Connect</h3>
-            <div class="space-y-3">
+          <div class="reveal rounded-2xl border border-border bg-surface p-6">
+            <h2 class="mb-4 flex items-center justify-between text-lg font-semibold">
+              Connect
+              <span class="font-mono text-[11px] text-subtle">/ say hi</span>
+            </h2>
+            <div class="space-y-1">
               <a
                 href={siteConfig.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                class="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
               >
-                <Github className="w-4 h-4" />
+                <Github className="h-4 w-4" />
                 <span>GitHub</span>
               </a>
               <a
                 href={siteConfig.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                class="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
               >
-                <Linkedin className="w-4 h-4" />
+                <Linkedin className="h-4 w-4" />
                 <span>LinkedIn</span>
               </a>
               <a
                 href={siteConfig.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                class="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
               >
-                <Twitter className="w-4 h-4" />
-                <span>Twitter</span>
+                <Twitter className="h-4 w-4" />
+                <span>Twitter / X</span>
               </a>
               <a
                 href={`mailto:${siteConfig.email}`}
-                class="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                class="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
               >
-                <Mail className="w-4 h-4" />
+                <Mail className="h-4 w-4" />
                 <span>{siteConfig.email}</span>
               </a>
             </div>
@@ -150,151 +139,84 @@ import {
       </div>
     </section>
 
-    <!-- Tech Stack Section -->
+    <!-- Skills -->
     <section>
-      <h2 class="text-2xl md:text-3xl font-bold mb-8">Skills & Stack</h2>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Frontend -->
-        <div
-          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-        >
-          <h3
-            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-          >
-            Frontend
-          </h3>
-          <div class="space-y-2">
-            {
-              techStack.frontend.map((tech) => (
-                <div class="flex items-center gap-2">
-                  <div class="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                  <span class="text-sm">{tech}</span>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Backend -->
-        <div
-          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-        >
-          <h3
-            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-          >
-            Backend
-          </h3>
-          <div class="space-y-2">
-            {
-              techStack.backend.map((tech) => (
-                <div class="flex items-center gap-2">
-                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span class="text-sm">{tech}</span>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- AI/ML -->
-        <div
-          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-        >
-          <h3
-            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-          >
-            AI/ML
-          </h3>
-          <div class="space-y-2">
-            {
-              techStack.ai_ml.map((tech) => (
-                <div class="flex items-center gap-2">
-                  <div class="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                  <span class="text-sm">{tech}</span>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Tools -->
-        <div
-          class="p-5 rounded-xl border border-white/5 bg-card/30 backdrop-blur-sm"
-        >
-          <h3
-            class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4"
-          >
-            Tools
-          </h3>
-          <div class="space-y-2">
-            {
-              techStack.tools.map((tech) => (
-                <div class="flex items-center gap-2">
-                  <div class="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  <span class="text-sm">{tech}</span>
-                </div>
-              ))
-            }
-          </div>
-        </div>
+      <h2 class="reveal mb-8 text-2xl font-semibold tracking-tight md:text-3xl">
+        Skills &amp; Stack
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          stackGroups.map((group) => (
+            <div class="reveal rounded-2xl border border-border bg-surface p-5">
+              <h3 class="mb-4 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
+                {group.label}
+              </h3>
+              <div class="space-y-2">
+                {group.items.map((tech) => (
+                  <div class="flex items-center gap-2.5 text-sm">
+                    <span class={`h-1.5 w-1.5 flex-none rounded-full ${group.dot}`} />
+                    <span>{tech}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
       </div>
     </section>
 
-    <!-- CTA Section - Lead Generation -->
+    <!-- CTA -->
     <section
-      class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-primary/10 via-card to-purple-500/10 p-8 md:p-12"
+      class="reveal relative overflow-hidden rounded-3xl border border-border p-8 md:p-12"
     >
       <div
-        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(120,119,198,0.15),transparent_50%)]"
+        class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_100%_at_100%_0%,hsl(var(--brand)/0.16),transparent_60%)]"
+        aria-hidden="true"
       >
       </div>
 
-      <div class="relative z-10 max-w-2xl">
-        <div
-          class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6"
+      <div class="max-w-2xl">
+        <span
+          class="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/25 bg-brand/10 px-3 py-1.5 text-sm font-medium text-brand-2"
         >
-          <Sparkles className="w-4 h-4" />
-          Open to Opportunities
-        </div>
+          <Sparkles className="h-4 w-4" />
+          Open to collaboration
+        </span>
 
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-          Let's Build Something Together
+        <h2 class="text-3xl font-semibold tracking-tight md:text-4xl">
+          Let's build something useful.
         </h2>
 
-        <p class="text-lg text-muted-foreground mb-8 leading-relaxed">
-          I'm always excited to meet fellow builders, creators, and investors
-          who share a passion for meaningful technology. Whether you want to
-          collaborate on a project or explore investment opportunities in our
-          venture studio, I'd love to connect.
+        <p class="mt-4 text-lg leading-relaxed text-muted-foreground">
+          I'm always glad to meet other builders and curious people. Whether you
+          want to collaborate on something, try one of the projects, or just
+          trade notes, I'd love to hear from you.
         </p>
 
-        <div class="flex flex-wrap gap-4">
+        <div class="mt-8 flex flex-wrap gap-3">
           <a
-            href={`mailto:${siteConfig.email}?subject=Let's Collaborate`}
-            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all hover:gap-3"
+            href={`mailto:${siteConfig.email}?subject=Hello`}
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 font-medium text-brand-foreground shadow-lg shadow-brand/20 transition-all hover:-translate-y-0.5 hover:gap-3 hover:shadow-xl hover:shadow-brand/30"
           >
-            <Mail className="w-4 h-4" />
-            Let's Collaborate
-            <ArrowRight className="w-4 h-4" />
+            <Mail className="h-4 w-4" />
+            Say hello
+            <ArrowRight className="h-4 w-4" />
           </a>
           <a
-            href={`mailto:${siteConfig.email}?subject=Investment Inquiry`}
-            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-secondary text-secondary-foreground font-medium hover:bg-secondary/80 transition-colors"
+            href="/projects"
+            class="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 py-3 font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-foreground/15 hover:bg-surface-2"
           >
-            Invest With Us
+            See the projects
           </a>
         </div>
 
-        <div
-          class="mt-8 pt-8 border-t border-white/5 text-sm text-muted-foreground"
-        >
-          <p class="font-medium text-foreground mb-2">What I'm looking for:</p>
+        <div class="mt-8 border-t border-border pt-8 text-sm text-muted-foreground">
+          <p class="mb-2 font-medium text-foreground">What I'm looking for:</p>
           <ul class="space-y-1">
-            <li>• Co-founders & collaborators for AI-driven ventures</li>
-            <li>• Strategic partners in the creative tech space</li>
-            <li>• Angel investors & VCs interested in our portfolio</li>
-            <li>• Like-minded builders who want to create real impact</li>
+            <li>• People to build useful products with</li>
+            <li>• Early users and honest feedback</li>
+            <li>• Collaborators who care about craft</li>
+            <li>• Anyone working on something genuinely useful</li>
           </ul>
         </div>
       </div>

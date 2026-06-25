@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Dock } from "../../components/Dock";
+import EngineCard from "../../components/EngineCard.astro";
+import TierCard from "../../components/TierCard.astro";
+import { tier1Projects, tier3Projects } from "../../data/projects";
+import { Hammer, Beaker } from "lucide-react";
+---
+
+<BaseLayout
+	title="Projects | Hung Pham — what I'm building"
+	description="A handful of personal projects in active development — built to be genuinely useful. Including AIGallery, VeganForReal, and more."
+>
+	<div class="space-y-20 md:space-y-28">
+		<!-- Header -->
+		<section class="pt-12 md:pt-16">
+			<div class="reveal max-w-3xl">
+				<p class="eyebrow mb-5">What I'm building</p>
+				<h1
+					class="text-4xl font-semibold leading-[1.04] tracking-tighter md:text-6xl"
+				>
+					Things I'm currently building.
+				</h1>
+				<p class="mt-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
+					A handful of personal projects — some live and growing, others
+					early experiments still finding their shape. All built to be
+					genuinely useful.
+				</p>
+			</div>
+		</section>
+
+		<!-- In active development -->
+		<section>
+			<div class="reveal mb-8 flex items-center gap-3.5">
+				<div
+					class="grid h-11 w-11 flex-none place-items-center rounded-xl border border-border bg-surface text-live"
+				>
+					<Hammer className="h-5 w-5" />
+				</div>
+				<div>
+					<h2 class="text-2xl font-semibold tracking-tight md:text-3xl">
+						In active development
+					</h2>
+					<p class="text-sm text-muted-foreground">
+						The projects I'm putting the most into right now
+					</p>
+				</div>
+			</div>
+
+			<div class="grid gap-5">
+				{tier1Projects.map((project) => <div class="reveal"><EngineCard project={project} /></div>)}
+			</div>
+		</section>
+
+		<!-- Experiments -->
+		<section>
+			<div class="reveal mb-8 flex items-center gap-3.5">
+				<div
+					class="grid h-11 w-11 flex-none place-items-center rounded-xl border border-border bg-surface text-sky-400"
+				>
+					<Beaker className="h-5 w-5" />
+				</div>
+				<div>
+					<h2 class="text-2xl font-semibold tracking-tight md:text-3xl">
+						Experiments
+					</h2>
+					<p class="text-sm text-muted-foreground">
+						Smaller ideas and early tools
+					</p>
+				</div>
+			</div>
+
+			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				{
+					tier3Projects.map((project) => (
+						<div class="reveal">
+							<TierCard project={project} size="compact" />
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- How I build -->
+		<section
+			class="reveal overflow-hidden rounded-3xl border border-border bg-surface p-8 md:p-12"
+		>
+			<p class="eyebrow mb-5">How I build</p>
+			<div class="grid gap-8 md:grid-cols-3">
+				<div>
+					<h3 class="mb-2 font-medium text-foreground">Build in public</h3>
+					<p class="text-sm leading-relaxed text-muted-foreground">
+						Share the process, not just the result — the wins, the dead
+						ends, and what I learned along the way.
+					</p>
+				</div>
+				<div>
+					<h3 class="mb-2 font-medium text-foreground">
+						Useful over impressive
+					</h3>
+					<p class="text-sm leading-relaxed text-muted-foreground">
+						I'd rather ship something people quietly rely on than
+						something that just demos well.
+					</p>
+				</div>
+				<div>
+					<h3 class="mb-2 font-medium text-foreground">Built to last</h3>
+					<p class="text-sm leading-relaxed text-muted-foreground">
+						Care about craft and the long game, so the things I make hold
+						up and keep getting better.
+					</p>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<Dock client:load />
+</BaseLayout>
