@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Dock } from "../components/Dock";
-import EngineCard from "../components/EngineCard.astro";
+import ProjectScene from "../components/ProjectScene.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import { tier1Projects } from "../data/projects";
 import { ArrowRight, ArrowDown } from "lucide-react";
@@ -142,11 +142,11 @@ const steps = [
 				/>
 			</div>
 
-			<div class="grid gap-5 sm:grid-cols-2">
-				{featured.map((project) => <div class="reveal"><EngineCard project={project} /></div>)}
+			<div class="mt-4 md:mt-6">
+				{featured.map((project, i) => <ProjectScene project={project} index={i} />)}
 			</div>
 
-			<div class="mt-8 text-center">
+			<div class="mt-10 text-center">
 				<a
 					href="/projects"
 					class="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-brand-2"

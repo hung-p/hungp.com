@@ -7,6 +7,7 @@ export interface Project {
 	stats?: string;
 	tags: string[];
 	image?: string;
+	accent?: string; // HSL triplet used by the home showcase, e.g. "286 84% 66%"
 	featured?: boolean;
 	status?: 'active' | 'beta' | 'development' | 'concept';
 	year?: number;
@@ -23,6 +24,7 @@ export interface ProjectTier {
 export const tier1Projects: Project[] = [
 	{
 		slug: "opmun",
+		accent: "218 85% 62%",
 		title: "Opmun",
 		description: "Opmun is an engineered global language designed to eliminate the structural redundancies and logical irregularities inherent in natural speech.",
 		longDescription: "Opmun is an engineered global language designed to eliminate the structural redundancies and logical irregularities inherent in natural speech. By synthesizing **OP** (Optimal and Open) frameworks with a **MUN** (World and Community) focus, it provides a high-efficiency linguistic foundation that strips away historical clutter to prioritize pure, logical human collaboration.\n\nThe project aims to create a universal communication layer that transcends cultural and linguistic barriers, enabling more efficient global collaboration.",
@@ -35,6 +37,7 @@ export const tier1Projects: Project[] = [
 	},
 	{
 		slug: "aigallery",
+		accent: "286 84% 66%",
 		title: "AIGallery",
 		description: "A generative AI platform that democratizes visual creation by providing frictionless, free-to-use image synthesis.",
 		longDescription: "AIGallery is a generative AI platform that democratizes visual creation by providing frictionless, free-to-use image synthesis. By integrating a vast ecosystem of curated prompts and creative ideas, it serves as both a generation engine and a strategic hub for visual ideation.\n\nOver time it has grown into a go-to platform for artists, designers, and creators exploring the possibilities of AI-generated art, supported by an organic and growing community.",
@@ -47,6 +50,7 @@ export const tier1Projects: Project[] = [
 	},
 	{
 		slug: "veganforreal",
+		accent: "150 58% 46%",
 		title: "VeganForReal",
 		description: "The premier full-stack ecosystem for the plant-based community.",
 		longDescription: "VeganForReal is the premier full-stack ecosystem for the plant-based community. Integrating restaurant discovery, curated recipes, and an authentic lifestyle marketplace.\n\nOur mission is to make plant-based living accessible, enjoyable, and connected, building a community that supports sustainable choices without compromise.",
@@ -59,6 +63,7 @@ export const tier1Projects: Project[] = [
 	},
 	{
 		slug: "vocalloom",
+		accent: "32 92% 56%",
 		title: "VocalLoom",
 		description: "AI-driven media network and music label leveraging neural audio synthesis.",
 		longDescription: "VocalLoom is an AI-driven media network and music label. Leveraging neural audio synthesis to automate and enhance creative music production.\n\nWe're building the future of music creation where AI and human creativity work together to produce unique, emotionally resonant content at scale.",
