@@ -24,6 +24,13 @@ const steps = [
 			id="hero"
 			class="relative -mt-8 ml-[calc(50%_-_50vw)] flex min-h-[100svh] w-screen flex-col md:-mt-14"
 		>
+			<!-- Brand "world" glow behind the headline -->
+			<div
+				class="pointer-events-none absolute left-[-12vw] top-1/2 z-0 h-[80vh] w-[75vw] -translate-y-1/2 bg-[radial-gradient(ellipse_46%_50%_at_50%_50%,hsl(var(--brand)/0.14),transparent_70%)]"
+				aria-hidden="true"
+			>
+			</div>
+
 			<!-- Interactive node-mesh (fills the hero) -->
 			<canvas
 				id="hero-net"
@@ -63,7 +70,10 @@ const steps = [
 						class="reveal mt-2 text-5xl font-semibold leading-[1.02] tracking-tighter md:text-7xl"
 					>
 						I build products that people
-						<span class="text-brand-2">actually use</span>.
+						<span
+							class="bg-gradient-to-r from-brand to-brand-2 bg-clip-text text-transparent"
+							>actually use</span
+						>.
 					</h1>
 
 					<p
